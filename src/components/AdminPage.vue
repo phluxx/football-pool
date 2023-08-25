@@ -75,7 +75,7 @@ export default {
   display: flex;
   justify-content: space-between;
   width: 100%;
-  padding 0 10px;
+  padding: 0 10px;
 }
 
 .betting-button {
