@@ -4,8 +4,10 @@
   <div class="admin-container">
     <h1>Admin Panel</h1>
     <div class="admin-options">
-      <button @click="openBetting">Open Betting</button>
-      <button @click="closeBetting">Close Betting</button>
+      <div class="betting-controls">
+        <button @click="openBetting">Open Betting</button>
+        <button @click="closeBetting">Close Betting</button>
+      </div>
       <router-link to="/admin/create-weekly-games">Create Weekly Games</router-link>
       <router-link to="/admin/update-scores">Update Scores</router-link>
     </div>
@@ -68,5 +70,25 @@ export default {
 .admin-options > button:hover {
   background-color: #7a1526;  
 }
-</style>
 
+.betting-controls {
+  display: flex;
+  justify-content: space-between;
+  width: max-content;
+}
+
+.betting-button {
+  margin: 0 10px;
+  background-color: #9E1B32;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 15px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.betting-button:hover {
+  background-color: #828A8F;
+}
+</style>
