@@ -24,7 +24,10 @@
 
 <script>
 import axios from "axios";
-import { v4 as uuidv4 } from 'uuid';
+import { v5 as uuidv5 } from 'uuid';
+
+const NAMESPACE = '656d427b-64a7-42e2-aa72-62068d61b85d';
+
 export default {
   data() {
     return {
@@ -38,9 +41,6 @@ export default {
     this.fetchTeams();
   },
   methods: {
-    generateUUID() {
-      return uuidv4();
-    },
     async fetchTeams() {
       try {
         const response = await axios.get("https://fbpsql.ewnix.net/api/populateteams");
@@ -49,11 +49,22 @@ export default {
         console.error("Error fetching teams:", error);
       }
     },
+    // Since I'm getting UUID errors in my console, let's figure out what's going on...
+    isValidUUID(uuid) {
+      const regex = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$/;
+      return regex.test(uuid)
+    },
     async saveGames() {
       try {
-        // Populate the ID for each game
+        // Generate ID and convert spread for each game
         this.games.forEach(game => {
-          game.id = this.generateUUID();
+	  const name = game.favorite + game.underdog + this.gameDate;
+	  const newUUID = uuidv5(name, NAMESPACE);
+	  // Let's validate each game's UUID before we continue..
+          if (!this.isValidUUID(newUUID)) {
+            throw new Error(`Invalid UUID generated for game: ${game.favorite} vs ${game.underdog} on ${this.gameDate}`);
+          }
+          game.id = newUUID;
 	  game.spread = parseFloat(game.spread); 
         });
 
