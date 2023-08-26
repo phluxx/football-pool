@@ -5,12 +5,12 @@
 
     <div v-for="(game, index) in games" :key="index" class="game-container">
       <label for="favorite">Favorite:</label>
-      <select v-model="game.favorite">
+      <select v-model="game.favorite" @change="alertTeamSelected(game.favorite, 'Favorite')">
         <option v-for="team in teams" :key="team.id" :value="team.id">{{ team.team }}</option>
       </select>
 
       <label for="underdog">Underdog:</label>
-      <select v-model="game.underdog">
+      <select v-model="game.underdog" @change="alertTeamSelected(game.underdog, 'Underdog')">
         <option v-for="team in teams" :key="team.id" :value="team.id">{{ team.team }}</option>
       </select>
 
@@ -53,6 +53,10 @@ export default {
     isValidUUID(uuid) {
       const regex = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$/;
       return regex.test(uuid)
+    },
+    // Debugging
+    alertTeamSelected(teamId, type) {
+      alert('${type} selected with ID: ${teamId}');
     },
     async saveGames() {
       try {
