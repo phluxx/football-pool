@@ -14,11 +14,11 @@
         <option v-for="team in teams" :key="team.id" :value="team.id">{{ team.team }}</option>
       </select>
 
-      <label for="spread">Spread:</label>
       <input type="text" v-model="game.spread" placeholder="Spread" />
     </div>
 
     <button @click="saveGames" class="betting-button">Save</button>
+    
   </div>
 </template>
 
@@ -30,7 +30,8 @@ export default {
     return {
       gameDate: "",
       teams: [],
-      games: Array.from({ length: 15 }, () => ({ favorite: null, underdog: null, spread: null }))
+      games: Array.from({ length: 15 }, () => ({ favorite: null, underdog: null, spread: null })),
+      saveMessage: "",  // For displaying a success/error message
     };
   },
   created() {
@@ -45,12 +46,27 @@ export default {
         console.error("Error fetching teams:", error);
       }
     },
-    saveGames() {
-      // Logic for saving games will be implemented later
+    async saveGames() {
+      try {
+        const payload = {
+          gameDate: this.gameDate,
+          games: this.games
+        };
+
+        const response = await axios.post("https://fbpsql.ewnix.net/api/savegames", payload);
+
+        // Display the response from the server
+        alert(response.data.message);
+
+      } catch (error) {
+        console.error("Error saving games:", error);
+        alert("Error saving games. Please try again later.");
+      }
     }
   }
 };
 </script>
+
 
 <style scoped>
 .admin-container {
