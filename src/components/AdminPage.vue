@@ -81,7 +81,7 @@ export default {
 
 .betting-button {
   font-family: 'Roboto', sans-serif;
-  font-size: 16px;
+  font-size: 18px;
   background-color: #9E1B32;
   color: #FFFFFF;
   border: none;
@@ -94,6 +94,6 @@ export default {
 }
 
 .betting-button:hover {
-  background-color: #828A8F;
+  background-color: #7a1526;
 }
 </style>
