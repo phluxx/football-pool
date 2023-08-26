@@ -14,7 +14,7 @@
         <option :disabled="!gameDate" v-for="team in teams" :key="team.id" :value="team.id">{{ team.team }}</option>
       </select>
 
-      <input :disabled="!gameDate" type="number" step="0.5" v-model="game.spread"  @input="enforceHalfPointSpreads(game)" placeholder="Spread" />
+      <input :disabled="!gameDate" type="number" step="0.5" v-model="game.spread"  @blur="enforceHalfPointSpreads(game)" placeholder="Spread" />
     </div>
 
     <button @click="saveGames" class="betting-button">Save</button>
