@@ -14,7 +14,7 @@
         <option v-for="team in teams" :key="team.id" :value="team.id">{{ team.team }}</option>
       </select>
 
-      <input type="text" v-model="game.spread" placeholder="Spread" />
+      <input type="number" step="0.5" v-model="game.spread" placeholder="Spread" />
     </div>
 
     <button @click="saveGames" class="betting-button">Save</button>
