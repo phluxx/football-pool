@@ -54,6 +54,7 @@ export default {
         try {
           const response = await axios.get(`https://fbpsql.ewnix.net/api/checkdate/${this.gameDate}`);
           if (response.data.gamesExist) {
+            this.gameDate = null;
             alert("Games already exist for this week! Please go to the Update Games page to update them.");
           }
         } catch (error) {
