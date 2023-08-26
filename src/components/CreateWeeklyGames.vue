@@ -58,13 +58,24 @@ export default {
       try {
         // Generate ID and convert spread for each game
         this.games.forEach(game => {
-	  const name = game.favorite + game.underdog + this.gameDate;
-	  const newUUID = uuidv5(name, NAMESPACE);
+	  const favoriteTeam = JSON.parse(game.favoriteTeam);
+	  const underdogTeam = JASON.parse(game.underdogTeam);
+	  const baseName = favoriteTeam.team + underdogTeam.team + this.gameDate;
+	  const baseUUID = uuidv5(baseName, NAMESPACE);
+	  
+	  // Let's make them unique...
+	  const uniqueSuffix = Date.now().toString() + Math.random().toString;
+	  const finalName = baseUUID + uniqueSuffix;
+
+	  const finalUUID = uuidv5(finalName, NAMESPACE);
+
 	  // Let's validate each game's UUID before we continue..
-          if (!this.isValidUUID(newUUID)) {
+          if (!this.isValidUUID(finalUUID)) {
             throw new Error(`Invalid UUID generated for game: ${game.favorite} vs ${game.underdog} on ${this.gameDate}`);
           }
-          game.id = newUUID;
+          game.id = finalUUID;
+	  game.fav_id = favoriteTeam.id;
+	  game.dog_id = underdogTeam.id;
 	  game.spread = parseFloat(game.spread); 
         });
 
