@@ -53,7 +53,7 @@ export default {
       try {
         // Populate the ID for each game
         this.games.forEach(game => {
-          game.id = generateUUID();
+          game.id =this.generateUUID();
         });
 
         const payload = {
