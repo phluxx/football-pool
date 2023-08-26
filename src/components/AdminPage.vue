@@ -42,7 +42,7 @@ export default {
 
 .admin-options > a {
   font-family: 'Roboto', sans-serif;
-  font-size: 17px;
+  font-size: 18px;
   display: block;
   margin: 15px 0;
   background-color: #9E1B32;
