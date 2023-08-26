@@ -41,6 +41,8 @@ export default {
 }
 
 .admin-options > a {
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
   display: block;
   margin: 15px 0;
   background-color: #9E1B32;
@@ -78,6 +80,8 @@ export default {
 }
 
 .betting-button {
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
   background-color: #9E1B32;
   color: #FFFFFF;
   border: none;
