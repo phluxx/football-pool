@@ -1,20 +1,20 @@
 <template>
   <div class="admin-container">
     <label for="gameDate">Games To Be Played On:</label>
-    <input type="date" v-model="gameDate" id="gameDate" />
+    <input type="date" v-model="gameDate" id="gameDate" @input="checkDate" />
 
     <div v-for="(game, index) in games" :key="index" class="game-container">
       <label for="favorite">Favorite:</label>
       <select v-model="game.favorite">
-        <option v-for="team in teams" :key="team.id" :value="team.id">{{ team.team }}</option>
+        <option :disabled="!gameDate" v-for="team in teams" :key="team.id" :value="team.id">{{ team.team }}</option>
       </select>
 
       <label for="underdog">Underdog:</label>
       <select v-model="game.underdog">
-        <option v-for="team in teams" :key="team.id" :value="team.id">{{ team.team }}</option>
+        <option :disabled="!gameDate" v-for="team in teams" :key="team.id" :value="team.id">{{ team.team }}</option>
       </select>
 
-      <input type="number" step="0.5" v-model="game.spread" placeholder="Spread" />
+      <input :disabled="!gameDate" type="number" step="0.5" v-model="game.spread"  @input="enforceHalfPointSpreads" placeholder="Spread" />
     </div>
 
     <button @click="saveGames" class="betting-button">Save</button>
@@ -49,12 +49,43 @@ export default {
         console.error("Error fetching teams:", error);
       }
     },
+    async checkDate() {
+      if (this.gameDate) {
+        try {
+          const response = await axios.get(`https://fbpsql.ewnix.net/api/checkdate/${this.gameDate}`);
+          if (response.data.gamesExist) {
+            alert("Games already exist for this week! Please go to the Update Games page to update them.");
+          }
+        } catch (error) {
+            console.error("Error checking date:", error);
+            alert("Error checking the date. Please try again later.");
+           }
+         }
+      },
+    enforceHalfPointSpreads(event) {
+      let value = parseFloat(event.target.value);
+      if (isNaN(value)) {
+        this.game.spread = "";
+      } else if (value % 1 !== 0.5) {
+        value = Math.round(value) + 0.5;
+        this.game.spread = value;
+      }
+    },
     // Since I'm getting UUID errors in my console, let's figure out what's going on...
     isValidUUID(uuid) {
       const regex = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$/;
       return regex.test(uuid)
     },
     async saveGames() {
+      // Make sure the form is actually completely filled out before we attempt any save logic.
+      if (!this.gameDate) {
+        return alert("Please pick a date.");
+      }
+      for (const game of this.games) {
+        if (!game.favorite || !game.underdog || !game.spread) {
+          return alert("All fields must be filled out.");
+        }
+      }
       try {
         // Generate ID and convert spread for each game
         this.games.forEach(game => {
@@ -92,7 +123,7 @@ export default {
         const response = await axios.post("https://fbpsql.ewnix.net/api/savegames", payload);
 
         // Display the response from the server
-        alert(response.data.message);
+        alert(response.data.status);
 
       } catch (error) {
         console.error("Error saving games:", error);
