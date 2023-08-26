@@ -25,7 +25,7 @@ export default {
     return {
       gameDate: "",
       teams: [],
-      games: Array(15).fill({ favorite: null, underdog: null, spread: null })
+      games: Array.from({ length: 15 }, () => ({ favorite: null, underdog: null, spread: null }))
     };
   },
   created() {
