@@ -24,7 +24,7 @@
 
 <script>
 import axios from "axios";
-
+import { v4 as uuidv4 } from 'uuid';
 export default {
   data() {
     return {
@@ -38,6 +38,9 @@ export default {
     this.fetchTeams();
   },
   methods: {
+    generateUUID() {
+      return uuidv4();
+    },
     async fetchTeams() {
       try {
         const response = await axios.get("https://fbpsql.ewnix.net/api/populateteams");
@@ -48,6 +51,11 @@ export default {
     },
     async saveGames() {
       try {
+        // Populate the ID for each game
+        this.games.forEach(game => {
+          game.id = generateUUID();
+        });
+
         const payload = {
           gameDate: this.gameDate,
           games: this.games
