@@ -58,8 +58,13 @@ export default {
       try {
         // Generate ID and convert spread for each game
         this.games.forEach(game => {
-	  const favoriteTeam = JSON.parse(game.favoriteTeam);
-	  const underdogTeam = JASON.parse(game.underdogTeam);
+	  const favoriteTeam = this.teams.find(team => team.id === game.favorite);
+	  const underdogTeam = this.teams.find(team => team.id === game.underdog);
+
+	  if (!favoriteTeam || !underdogTeam) {
+	      throw new Error('Could not find team details.');
+	  }
+
 	  const baseName = favoriteTeam.team + underdogTeam.team + this.gameDate;
 	  const baseUUID = uuidv5(baseName, NAMESPACE);
 	  
