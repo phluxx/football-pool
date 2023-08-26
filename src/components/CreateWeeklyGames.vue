@@ -14,7 +14,7 @@
         <option :disabled="!gameDate" v-for="team in teams" :key="team.id" :value="team.id">{{ team.team }}</option>
       </select>
 
-      <input :disabled="!gameDate" type="number" step="0.5" v-model="game.spread"  @input="enforceHalfPointSpreads" placeholder="Spread" />
+      <input :disabled="!gameDate" type="number" step="0.5" v-model="game.spread"  @input="enforceHalfPointSpreads(game)" placeholder="Spread" />
     </div>
 
     <button @click="saveGames" class="betting-button">Save</button>
@@ -62,13 +62,13 @@ export default {
            }
          }
       },
-    enforceHalfPointSpreads(event) {
-      let value = parseFloat(event.target.value);
+    enforceHalfPointSpreads(game) {
+      let value = parseFloat(game.spread);
       if (isNaN(value)) {
-        this.game.spread = "";
+        game.spread = "";
       } else if (value % 1 !== 0.5) {
         value = Math.round(value) + 0.5;
-        this.game.spread = value;
+        game.spread = value;
       }
     },
     // Since I'm getting UUID errors in my console, let's figure out what's going on...
