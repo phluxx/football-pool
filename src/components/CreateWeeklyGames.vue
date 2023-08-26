@@ -1,19 +1,24 @@
 <template>
   <div class="admin-container">
     <label for="gameDate">Games To Be Played On:</label>
-    <input type="date" v-model="gameDate" id="gameDate">
+    <input type="date" v-model="gameDate" id="gameDate" />
 
-    <div v-for="game in games" :key="game.id" class="betting-controls">
+    <div v-for="(game, index) in games" :key="index" class="game-container">
+      <label for="favorite">Favorite:</label>
       <select v-model="game.favorite">
         <option v-for="team in teams" :key="team.id" :value="team.id">{{ team.team }}</option>
       </select>
+
+      <label for="underdog">Underdog:</label>
       <select v-model="game.underdog">
         <option v-for="team in teams" :key="team.id" :value="team.id">{{ team.team }}</option>
       </select>
-      <input type="number" v-model="game.spread" placeholder="Spread">
+
+      <label for="spread">Spread:</label>
+      <input type="text" v-model="game.spread" placeholder="Spread" />
     </div>
 
-    <button class="betting-button" @click="saveGames">Save</button>
+    <button @click="saveGames" class="betting-button">Save</button>
   </div>
 </template>
 
@@ -57,45 +62,6 @@ export default {
   text-align: center;
 }
 
-.admin-options > a {
-  font-family: 'Roboto', sans-serif;
-  font-size: 18px;
-  display: block;
-  margin: 15px 0;
-  background-color: #9E1B32;
-  padding: 10px 15px;
-  border-radius: 5px;
-  color: #FFFFFF;
-  text-decoration: none;
-  transition: background-color 0.3s;
-}
-
-.admin-options > a:hover {
-  background-color: #7a1526;
-}
-
-.admin-options > button {
-  display: block;
-  margin: 15px 0;
-  background-color: #9E1B32;
-  padding: 10px 15px;
-  border: none;
-  border-radius: 5px;
-  color: #FFFFFF;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.admin-options > button:hover {
-  background-color: #7a1526;
-}
-
-.betting-controls {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
 .betting-button {
   font-family: 'Roboto', sans-serif;
   font-size: 18px;
@@ -104,6 +70,23 @@ export default {
   border: none;
   border-radius: 8px;
   padding: 10px 15px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.betting-button:hover {
+  background-color: #7a1526;
+}
+
+.game-container {
+  background-color: rgba(142, 138, 143, 0.2);
+  border-radius: 8px;
+  padding: 10px;
+  margin: 15px 0;
+}
+
+label {
+  display: inline-block;
+  margin-right: 10px;
 }
 </style>
-
