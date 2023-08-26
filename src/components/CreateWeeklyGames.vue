@@ -57,7 +57,7 @@ export default {
     // Debugging
     alertTeamSelected(teamId, type) {
       const msg = type + " selected with ID: " + teamId;
-      alert(message);
+      alert(msg);
     },
     async saveGames() {
       try {
