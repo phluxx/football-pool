@@ -1,62 +1,50 @@
 <template>
   <div class="admin-container">
-    <h2>Create Weekly Football Games</h2>
-    
-    <!-- Date picker section -->
-    <div class="date-section">
-      <label for="gameDate">Games To Be Played On:</label>
-      <input type="date" id="gameDate" v-model="gameDate">
+    <label for="gameDate">Games To Be Played On:</label>
+    <input type="date" v-model="gameDate" id="gameDate">
+
+    <div v-for="game in games" :key="game.id" class="betting-controls">
+      <select v-model="game.favorite">
+        <option v-for="team in teams" :key="team.id" :value="team.id">{{ team.team }}</option>
+      </select>
+      <select v-model="game.underdog">
+        <option v-for="team in teams" :key="team.id" :value="team.id">{{ team.team }}</option>
+      </select>
+      <input type="number" v-model="game.spread" placeholder="Spread">
     </div>
 
-    <div class="betting-controls">
-      <table>
-        <thead>
-          <tr>
-            <th>Favored Team</th>
-            <th>Underdog</th>
-            <th>Point Spread</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="game in 15" :key="game">
-            <td>
-              <select v-model="selectedFavored[game]">
-                <option v-for="team in teams" :key="team.id" :value="team.id">{{ team.team }}</option>
-              </select>
-            </td>
-            <td>
-              <select v-model="selectedUnderdog[game]">
-                <option v-for="team in teams" :key="team.id" :value="team.id">{{ team.team }}</option>
-              </select>
-            </td>
-            <td>
-              <input type="number" v-model="pointSpread[game]" placeholder="Point Spread"/>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <button class="betting-button" @click="saveGames">Save</button>
-    </div>
+    <button class="betting-button" @click="saveGames">Save</button>
   </div>
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   data() {
     return {
-      gameDate: '',          // To store the selected game date
-      teams: [],             // You can populate this from your MySQL database
-      selectedFavored: {},   // To store the selected favored teams
-      selectedUnderdog: {},  // To store the selected underdog teams
-      pointSpread: {}        // To store the point spreads
+      gameDate: "",
+      teams: [],
+      games: Array(15).fill({ favorite: null, underdog: null, spread: null })
     };
   },
+  created() {
+    this.fetchTeams();
+  },
   methods: {
-    async saveGames() {
-      // Implement your save logic here
+    async fetchTeams() {
+      try {
+        const response = await axios.get("https://fbpsql.ewnix.net/api/populateteams");
+        this.teams = response.data;
+      } catch (error) {
+        console.error("Error fetching teams:", error);
+      }
+    },
+    saveGames() {
+      // Logic for saving games will be implemented later
     }
   }
-}
+};
 </script>
 
 <style scoped>
@@ -69,8 +57,7 @@ export default {
   text-align: center;
 }
 
-.admin-options > a,
-.admin-options > button {
+.admin-options > a {
   font-family: 'Roboto', sans-serif;
   font-size: 18px;
   display: block;
@@ -83,7 +70,22 @@ export default {
   transition: background-color 0.3s;
 }
 
-.admin-options > a:hover,
+.admin-options > a:hover {
+  background-color: #7a1526;
+}
+
+.admin-options > button {
+  display: block;
+  margin: 15px 0;
+  background-color: #9E1B32;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  color: #FFFFFF;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
 .admin-options > button:hover {
   background-color: #7a1526;
 }
@@ -102,16 +104,6 @@ export default {
   border: none;
   border-radius: 8px;
   padding: 10px 15px;
-}
-
-.date-section {
-  margin-bottom: 20px; /* Add spacing between the date picker and the table */
-}
-
-label {
-  font-family: 'Roboto', sans-serif;
-  font-size: 18px;
-  margin-right: 10px;
 }
 </style>
 
