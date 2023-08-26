@@ -53,7 +53,8 @@ export default {
       try {
         // Populate the ID for each game
         this.games.forEach(game => {
-          game.id =this.generateUUID();
+          game.id = this.generateUUID();
+	  game.spread = parseFloat(game.spread); 
         });
 
         const payload = {
