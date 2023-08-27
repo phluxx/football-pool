@@ -9,7 +9,8 @@
         <button class="betting-button" @click="closeBetting">Close Betting</button>
       </div>
       <router-link to="/admin/create">Create Weekly Games</router-link>
-      <router-link to="/admin/update-scores">Update Scores</router-link>
+      <router-link to="/admin/updategames">Update Weekly Games</router-link>
+      <router-link to="/admin/updatescores">Update Scores</router-link>
     </div>
   </div>
 </template>
