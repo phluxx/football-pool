@@ -44,12 +44,7 @@ export default {
     async fetchTeams() {
       try {
         const response = await axios.get("https://fbpsql.ewnix.net/api/populateteams");
-        this.teams = response.data.map(team => {
-          return {
-            ...team,
-            id: this.binaryToHex(team.id)
-          };
-        });
+        this.teams = response.data;
       } catch (error) {
         console.error("Error fetching teams:", error);
       }
@@ -76,14 +71,7 @@ export default {
         try {
           const response = await axios.get(`https://fbpsql.ewnix.net/api/populategames/${this.gameDate}`);
           if (response.data && response.data.length) {
-            this.games = response.data.map(game => {
-              return {
-                ...game,
-                id: game.id ? this.binaryToHex(game.id) : null,
-                favorite: game.favorite ? this.binaryToHex(game.favorite) : null,
-                underdog: game.underdog ? this.binaryToHex(game.underdog) : null,
-              };
-            });
+            this.games = response.data;
           }
         } catch (error) {
           console.error("Error populating games:", error);
@@ -91,13 +79,6 @@ export default {
         }
       },
       
-      binaryToHex(binaryStr) {
-        const byteArray = new Uint8Array(binaryStr.split('').map(char => char.charCodeAt(0)));
-        const hexString = Array.from(byteArray).map(byte => byte.toString(16).padStart(2, '0')).join('');
-        console.log("Converted ", binaryStr, " to ", hexString);
-        return hexString;
-      },
-
     enforceHalfPointSpreads(game) {
       let value = parseFloat(game.spread);
       if (isNaN(value)) {
@@ -112,6 +93,7 @@ export default {
       const regex = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$/;
       return regex.test(uuid)
     },
+
     async saveGames() {
       // Make sure the form is actually completely filled out before we attempt any save logic.
       if (!this.gameDate) {
@@ -123,32 +105,30 @@ export default {
         }
       }
       try {
+        const teamLookup = {};
+        this.teams.forEach(team => {
+          teamLookup[team.id] = team;
+        });
         // Generate ID and convert spread for each game
         this.games.forEach(game => {
-	  const favoriteTeam = this.teams.find(team => team.id === game.favorite);
-	  const underdogTeam = this.teams.find(team => team.id === game.underdog);
+          const favoriteTeam = teamLookup[game.favorite];
+          const underdogTeam = teamLookup[game.underdog];
 
-	  if (!favoriteTeam || !underdogTeam) {
-	      throw new Error('Could not find team details.');
-	  }
-
-	  const baseName = favoriteTeam.team + underdogTeam.team + this.gameDate;
-	  const baseUUID = uuidv5(baseName, NAMESPACE);
-	  
-	  // Let's make them unique...
-	  const uniqueSuffix = Date.now().toString() + Math.random().toString;
-	  const finalName = baseUUID + uniqueSuffix;
-
-	  const finalUUID = uuidv5(finalName, NAMESPACE);
-
-	  // Let's validate each game's UUID before we continue..
-          if (!this.isValidUUID(finalUUID)) {
-            throw new Error(`Invalid UUID generated for game: ${game.favorite} vs ${game.underdog} on ${this.gameDate}`);
+          if (!favoriteTeam || !underdogTeam) {
+            throw new Error("Invalid team ID");
           }
-          game.id = finalUUID;
-	        game.fav_id = favoriteTeam.id;
-	        game.dog_id = underdogTeam.id;
-	        game.spread = parseFloat(game.spread); 
+
+          const name = favoriteTeam.team + underdogTeam.team + this.gameDate;
+          const generatedUUID = uuidv5(name, NAMESPACE);
+
+          if (!this.isValidUUID(generatedUUID)) {
+            throw new Error("Invalid UUID");
+          }
+
+          game.id = generatedUUID;
+          game.fav_id = favoriteTeam.id;
+          game.dog_id = underdogTeam.id;
+          game.spread = parseFloat(game.spread);
         });
 
         const payload = {
@@ -156,18 +136,14 @@ export default {
           games: this.games
         };
 
-        const response = await axios.post("https://fbpsql.ewnix.net/api/updategames", payload);
-
-        // Display the response from the server
+        const response = await axios.post("https://fbpsql.ewnix.net/api/savegames", payload);
         alert(response.data.status);
-
       } catch (error) {
         console.error("Error saving games:", error);
         alert("Error saving games. Please try again later.");
       }
     }
-  }
-};
+	  
 </script>
 
 
