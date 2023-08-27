@@ -78,7 +78,12 @@ export default {
       }
     },
     async fetchTeams() {
-      // Same fetchTeams method as before...
+      try {
+        const response = await axios.get("https://fbpsql.ewnix.net/api/populateteams");
+        this.teams = response.data;
+      } catch (error) {
+        console.error("Error fetching teams:", error);
+      }
     },
     getLogoURL(uuid) {
       const hexUUID = uuid.replace(/-/g, "");
