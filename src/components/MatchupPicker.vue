@@ -5,18 +5,18 @@
     <div v-for="(game, index) in games" :key="game.id" class="game-container">
       <h3>Game {{ index + 1 }}</h3>
       <div>
-        <img :src="getLogoURL(game.fav_id)" alt="Favorite Team Logo" class="team-logo">
+        <img :src="getLogoURL(game.favorite)" alt="Favorite Team Logo" class="team-logo">
         <span>Favorite:</span>
-        {{ getTeamName(game.fav_id) }}
+        {{ getTeamName(game.favorite) }}
         <input type="radio" v-model="picks[game.id]" :value="game.fav_id">
       </div>
 
       <span class="spread">Spread: {{ game.spread }}</span>
 
       <div>
-        <img :src="getLogoURL(game.dog_id)" alt="Underdog Team Logo" class="team-logo">
+        <img :src="getLogoURL(game.underdog)" alt="Underdog Team Logo" class="team-logo">
         <span>Underdog:</span>
-        {{ getTeamName(game.dog_id) }}
+        {{ getTeamName(game.underdog) }}
         <input type="radio" v-model="picks[game.id]" :value="game.dog_id">
       </div>
     </div>
@@ -69,20 +69,20 @@ export default {
       }
       return date.toISOString().split('T')[0];
     },
-    async fetchGames() {
-      try {
-        const response = await axios.get(`https://fbpsql.ewnix.net/api/matchmaker/${this.nextSaturday}`);
-        this.games = response.data;
-      } catch (error) {
-        console.error("Error fetching games:", error);
-      }
-    },
     async fetchTeams() {
       try {
         const response = await axios.get("https://fbpsql.ewnix.net/api/populateteams");
         this.teams = response.data;
       } catch (error) {
         console.error("Error fetching teams:", error);
+      }
+    },
+    async fetchGames() {
+      try {
+        const response = await axios.get(`https://fbpsql.ewnix.net/api/matchmaker/${this.nextSaturday}`);
+        this.games = response.data;
+      } catch (error) {
+        console.error("Error fetching games:", error);
       }
     },
     getLogoURL(uuid) {
