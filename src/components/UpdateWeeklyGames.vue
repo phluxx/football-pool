@@ -69,7 +69,7 @@ export default {
 
       async populateGames() {
         try {
-          const response = await axios.get(`https://gbpsql.ewnix.net/api/populategames/${this.gameDate}`);
+          const response = await axios.get(`https://fbpsql.ewnix.net/api/populategames/${this.gameDate}`);
           if (response.data && response.length) {
             this.games = response.data;
           }
