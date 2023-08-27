@@ -70,13 +70,24 @@ export default {
       async populateGames() {
         try {
           const response = await axios.get(`https://fbpsql.ewnix.net/api/populategames/${this.gameDate}`);
-          if (response.data && response.length) {
-            this.games = response.data;
+          if (response.data && response.data.length) {
+            this.games = response.data.map(game => {
+              return {
+                ...game,
+                id: this.binaryToHex(game.id),
+                favorite: this.binaryToHex(game.fav_id),
+                underdog: this.binaryToHex(game.underdog)
+              };
+            });
           }
         } catch (error) {
           console.error("Error populating games:", error);
           alert("Error populating games. Please try again later.");
         }
+      },
+      
+      binaryToHex(binaryStr) {
+        return Buffer.from(binaryStr, 'binary').toString('hex');
       },
 
     enforceHalfPointSpreads(game) {
