@@ -8,7 +8,7 @@
         <img :src="getLogoURL(game.favorite)" alt="Favorite Team Logo" class="team-logo">
         <span>Favorite:</span>
         {{ getTeamName(game.favorite) }}
-        <input type="radio" v-model="picks[game.id]" :value="game.fav_id">
+        <input type="radio" v-model="picks[game.id]" :value="game.favorite">
       </div>
 
       <span class="spread">Spread: {{ game.spread }}</span>
