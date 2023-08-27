@@ -17,7 +17,7 @@
         <img :src="getLogoURL(game.underdog)" alt="Underdog Team Logo" class="team-logo">
         <span>Underdog:</span>
         {{ getTeamName(game.underdog) }}
-        <input type="radio" v-model="picks[game.id]" :value="game.dog_id">
+        <input type="radio" v-model="picks[game.id]" :value="game.underdog">
       </div>
     </div>
 
