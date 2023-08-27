@@ -75,7 +75,7 @@ export default {
               return {
                 ...game,
                 id: this.binaryToHex(game.id),
-                favorite: this.binaryToHex(game.fav_id),
+                favorite: this.binaryToHex(game.favorite),
                 underdog: this.binaryToHex(game.underdog)
               };
             });
