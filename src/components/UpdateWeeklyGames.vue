@@ -143,7 +143,8 @@ export default {
         alert("Error saving games. Please try again later.");
       }
     }
-  };
+  }
+};
 	  
 </script>
 
