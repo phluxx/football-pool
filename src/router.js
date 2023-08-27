@@ -12,7 +12,7 @@ const routes = [
   { path: '/pick', component: MatchupPicker },
   { path: '/admin', name: 'AdminPage', component: AdminPage },
   { path: '/admin/create', name: 'CreateWeeklyGames', component: CreateWeeklyGames },
-  { path: '/admin/updategames', name: 'UpdateWeeklyGames', component: UpdateWeeklyGames}
+  { path: '/admin/updategames', name: 'UpdateWeeklyGames', component: UpdateWeeklyGames},
   { path: '/admin/updatescores', name: 'UpdateScores', component: UpdateScores },
 ]
 
