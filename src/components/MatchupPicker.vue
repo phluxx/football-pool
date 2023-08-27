@@ -86,7 +86,7 @@ export default {
       }
     },
     getLogoURL(uuid) {
-      const hexUUID = uuid.replace(/-/g, "");
+      const hexUUID = uuid.replace(/-/g, "").toUpperCase();
       return `https://sjc1.vultrobjects.com/football-pool/logos/${hexUUID}/logo.png`;
     },
     getTeamName(uuid) {
@@ -108,61 +108,70 @@ body {
 }
 
 div {
-  margin: 10px 0;
+  margin: 20px 0;
 }
 
 h2 {
   text-align: center;
-  margin-bottom: 30px;
+  margin-bottom: 40px;
 }
 
 .game-container {
-  background-color: rgba(255, 255, 255, 0.1); 
+  background-color: rgba(158, 27, 50, 0.5); 
   border: 1px solid #9E1B32;
-  border-radius: 15px;
-  margin-bottom: 25px;
+  border-radius: 25px;
+  margin-bottom: 30px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 15px 25px;
+  box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s;
+}
+
+.game-container:hover {
+  transform: translateY(-5px);
 }
 
 h3 {
   text-align: center;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
 }
 
 .team-logo {
-  width: 50px;
-  height: 50px;
+  width: 75px;
+  height: 75px;
   border-radius: 50%; 
-  margin-right: 10px;
+  margin-right: 15px;
 }
 
 .spread {
   font-weight: bold;
-  font-size: 1.2em;
+  font-size: 1.4em;
   background-color: #9E1B32;
-  padding: 5px 10px;
-  border-radius: 5px;
+  padding: 10px 15px;
+  border-radius: 10px;
 }
 
 button {
   background-color: #9E1B32;
   color: #FFFFFF;
   display: block;
-  margin: 20px auto;
+  margin: 30px auto;
   border: none;
-  border-radius: 10px;
-  padding: 10px 20px;
-  font-size: 1.1em;
+  border-radius: 20px;
+  padding: 15px 30px;
+  font-size: 1.2em;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s, transform 0.3s;
 }
 
 button:hover {
   background-color: #7a1526; 
+  transform: translateY(-3px);
 }
 </style>
+
 
 
 
