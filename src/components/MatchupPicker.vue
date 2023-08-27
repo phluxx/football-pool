@@ -48,8 +48,8 @@ export default {
       const currentDateIso = date.toISOString().split('T')[0];
 
       // Since the season doesn't start until 9/2, let's start with that date.
-      if (currentDateIso < '2021-09-02') {
-        return '2021-09-02';
+      if (currentDateIso < '2023-09-02') {
+        return '2023-09-02';
       }
 
       // If today is Saturday, return today's date
