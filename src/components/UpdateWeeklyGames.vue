@@ -74,9 +74,9 @@ export default {
             this.games = response.data.map(game => {
               return {
                 ...game,
-                id: this.binaryToHex(game.id),
-                favorite: this.binaryToHex(game.favorite),
-                underdog: this.binaryToHex(game.underdog)
+                id: game.id ? this.binaryToHex(game.id) : null,
+                favorite: game.favorite ? this.binaryToHex(game.favorite) : null,
+                underdog: game.underdog ? this.binaryToHex(game.underdog) : null,
               };
             });
           }
@@ -88,7 +88,9 @@ export default {
       
       binaryToHex(binaryStr) {
         const byteArray = new Uint8Array(binaryStr.split('').map(char => char.charCodeAt(0)));
-        return Array.from(byteArray).map(byte => byte.toString(16).padStart(2, '0')).join('');
+        const hexString = Array.from(byteArray).map(byte => byte.toString(16).padStart(2, '0')).join('');
+        console.log("Converted ", binaryStr, " to ", hexString);
+        return hexString;
       },
 
     enforceHalfPointSpreads(game) {
