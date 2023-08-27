@@ -136,7 +136,7 @@ export default {
           games: this.games
         };
 
-        const response = await axios.post("https://fbpsql.ewnix.net/api/savegames", payload);
+        const response = await axios.post("https://fbpsql.ewnix.net/api/updategames", payload);
         alert(response.data.status);
       } catch (error) {
         console.error("Error saving games:", error);
