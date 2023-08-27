@@ -45,6 +45,12 @@ export default {
     findNextSaturday() {
       let date = new Date();
       const today = date.getDay();
+      const currentDateIso = date.toISOString().split('T')[0];
+
+      // Since the season doesn't start until 9/2, let's start with that date.
+      if (currentDateIso < '2021-09-02') {
+        return '2021-09-02';
+      }
 
       // If today is Saturday, return today's date
       if (today === 6) {
@@ -138,6 +144,8 @@ h3 {
 button {
   background-color: #9E1B32;
   color: #FFFFFF;
+  display: block;
+  margin: 20px auto;
   border: none;
   border-radius: 10px;
   padding: 10px 20px;
