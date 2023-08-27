@@ -87,7 +87,8 @@ export default {
       },
       
       binaryToHex(binaryStr) {
-        return Buffer.from(binaryStr, 'binary').toString('hex');
+        const byteArray = new Uint8Array(binaryStr.split('').map(char => char.charCodeAt(0)));
+        return Array.from(byteArray).map(byte => byte.toString(16).padStart(2, '0')).join('');
       },
 
     enforceHalfPointSpreads(game) {
