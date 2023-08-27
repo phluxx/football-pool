@@ -44,7 +44,12 @@ export default {
     async fetchTeams() {
       try {
         const response = await axios.get("https://fbpsql.ewnix.net/api/populateteams");
-        this.teams = response.data;
+        this.teams = response.data.map(team => {
+          return {
+            ...team,
+            id: this.binaryToHex(team.id)
+          };
+        });
       } catch (error) {
         console.error("Error fetching teams:", error);
       }
