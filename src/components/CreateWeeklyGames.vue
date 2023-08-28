@@ -126,6 +126,7 @@ export default {
         };
 
         const tiebreakerPayload = {
+          gameDate: this.gameDate,
           tiebreakerQuestion: this.tiebreakerQuestion
         };
 
