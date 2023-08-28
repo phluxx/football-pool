@@ -103,7 +103,7 @@ export default {
       return team ? team.team : '';
     },
     selectTeam(gameId, teamId) {
-      this.$set(this.picks, gameId, teamId);
+      this.picks[gameId] = teamId;
     },
     async savePicks() {
       // TODO: Write logic to save users' picks.
@@ -126,25 +126,6 @@ div {
 h2 {
   text-align: center;
   margin-bottom: 40px;
-}
-
-.game-container {
-  background-color: rgba(158, 27, 50, 0.5); 
-  border: 1px solid #9E1B32;
-  border-radius: 25px;
-  margin-bottom: 30px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px;
-  box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.2);
-  transition: transform 0.3s;
-  flex-direction: column;
-  padding: 15px;
-}
-
-.game-container:hover {
-  transform: translateY(-5px);
 }
 
 h3 {
