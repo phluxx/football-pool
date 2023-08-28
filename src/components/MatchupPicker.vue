@@ -30,7 +30,7 @@
 
     <button @click="savePicks">Save Picks</button>
   </div>
-  <div v-else class="game-container">
+  <div v-else>
     <h2>Pick 'em for the week of Saturday, {{ nextSaturday }}</h2>
     <p>Betting is closed for this week.</p>
     <p><router-link to="/viewmypicks">View your picks</router-link></p>
@@ -263,6 +263,10 @@ h3 {
 
 .tiebreaker label {
   margin-bottom: 10px;
+}
+
+p {
+  text-align: center;
 }
 
 td.team-selection:hover, td.team-selected {
