@@ -36,11 +36,11 @@ export default {
             return;
           }
 
-          let token = await response.text();
+          let token = await responseBody.token;
 
           // Store the token in local storage
 
-          localStorage.setItem("token", responseBody.token);
+          localStorage.setItem("token", token);
 
           this.password = '';
 
