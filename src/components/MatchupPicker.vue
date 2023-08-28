@@ -265,6 +265,16 @@ h3 {
   margin-bottom: 10px;
 }
 
+a.router-link {
+  color: #9E1B32;
+  text-decoration: none;
+}
+
+a.router-link:hover {
+  color: #8A1729;
+  text-decoration: none;
+}
+
 p {
   text-align: center;
 }

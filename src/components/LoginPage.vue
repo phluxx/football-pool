@@ -17,11 +17,39 @@ export default {
   },
   methods: {
     async login() {
-      // Call your backend API here and get the session token
-      // Navigate to picker page if successful:
-      this.$router.push('/pick');
+      try {
+        let response = await fetch("https://fbpsql.ewnix.net/api/login", {
+          method: "POST",
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            username: this.username,
+            password: this.password
+          })
+          });
+
+          let responseBody = await response.json();
+
+          if (response.status !== 200) {
+            alert(responseBody.message || "Something went wrong!");
+            return;
+          }
+
+          let token = await response.text();
+
+          // Store the token in local storage
+
+          localStorage.setItem("token", responseBody.token);
+
+          this.password = '';
+
+          this.$router.push('/pick');
+        } catch (err) {
+          alert("Error during the login process!");
+        }
+      }
     }
   }
-}
 </script>
 
