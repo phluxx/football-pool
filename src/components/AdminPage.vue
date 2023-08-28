@@ -39,7 +39,7 @@ export default {
      },
      async openBetting() {
       try {
-        await axios.post('https://fbpsql.ewnix.net/api/openBetting');
+        await axios.post('https://fbpsql.ewnix.net/api/openbetting');
         this.isBettingOpen = true;
         alert("Betting Opened!");
       } catch (error) {
@@ -49,7 +49,7 @@ export default {
       },
       async closeBetting() {
         try {
-          await axios.post('https://hbpsql.ewnix.net/api/closeBetting');
+          await axios.post('https://hbpsql.ewnix.net/api/closebetting');
           this.isBettingOpen = false;
           alert("Betting Closed!");
       } catch (error) {
