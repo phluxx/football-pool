@@ -18,7 +18,7 @@
     </div>
     <div class="tiebreaker-container">
       <label for="tiebreakerQuestion">Tiebreaker Question:</label>
-      <input type="text" v-model="tiebreakerQuestion" id="tiebreakerQuestion" />
+      <input type="text" v-model="tiebreakerQuestion" id="tiebreakerQuestion" class="tbqinput" />
     </div>
     <button @click="saveGames" class="betting-button">Save</button>
     
@@ -181,5 +181,10 @@ export default {
 label {
   display: inline-block;
   margin-right: 10px;
+}
+
+.tbqinput {
+  background-color: #FFFFFF;
+  border-radius: 10px;
 }
 </style>
