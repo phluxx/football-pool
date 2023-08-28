@@ -200,9 +200,13 @@ table.game-container {
   border-spacing: 0;
   margin: 20px auto;
   max-width: 800px;
-  border: 2px solid #9E1B32;
+  border: none;
   border-radius: 10px;
   overflow: hidden;
+}
+
+border.game-container thead {
+  border-bottom: 2px solid #9E1B32;
 }
 
 td.team-selection {
@@ -214,7 +218,7 @@ td.team-selection {
   transition: background-color 0.3s;
 }
 
-table.game-container tbody tr > td.team-selection:hover {
+td.team-selection:not(.team-selected):hover {
   background-color: rgba(255, 255, 255, 0.1);
 }
 
