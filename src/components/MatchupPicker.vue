@@ -110,7 +110,14 @@ export default {
       this.picks[gameId] = teamId;
     },
     async savePicks() {
-      // TODO: Write logic to save users' picks.
+      try {
+        await axios.post("https://fbpsql.ewnix.net/api/savepicks", { picks: this.picks });
+        await axios.port("https://fbpsql.ewnix.net/api/savetiebreaker", { tiebreaker: this.tiebreakerAnswer });
+      alert("Picks saved!");
+      } catch (error) {
+        console.error("Error saving picks:", error);
+        alert("Error saving picks!");
+      }
     },
     async fetchTiebreaker() {
       try {
