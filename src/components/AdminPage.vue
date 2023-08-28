@@ -49,7 +49,7 @@ export default {
       },
       async closeBetting() {
         try {
-          await axios.post('https://hbpsql.ewnix.net/api/closebetting');
+          await axios.post('https://fbpsql.ewnix.net/api/closebetting');
           this.isBettingOpen = false;
           alert("Betting Closed!");
       } catch (error) {

@@ -30,9 +30,10 @@
 
     <button @click="savePicks">Save Picks</button>
   </div>
-  <div v-else>
+  <div v-else class="game-container">
     <h2>Pick 'em for the week of Saturday, {{ nextSaturday }}</h2>
     <p>Betting is closed for this week.</p>
+    <p><router-link to="/viewmypicks">View your picks</router-link></p>
   </div>
 </template>
 
