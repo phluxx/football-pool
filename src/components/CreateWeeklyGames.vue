@@ -130,7 +130,7 @@ export default {
         };
 
         await axios.post("https://fbpsql.ewnix.net/api/savegames", payload);
-        await axios.port("https://fbpsql.ewnix.net/api/savetiebreaker", tiebreakerPayload);
+        await axios.post("https://fbpsql.ewnix.net/api/savetiebreaker", tiebreakerPayload);
 
         // Display the response from the server
        alert("Games saved!");
