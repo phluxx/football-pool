@@ -135,9 +135,9 @@ export default {
 
 <style scoped>
 body {
-  background-color: #828A8F;
+  background-color: #FFFFFF;
   font-family: 'Roboto', sans-serif;
-  color: #FFFFFF;
+  color: #000000;
 }
 
 div {
@@ -226,9 +226,14 @@ table.game-container {
   width: 100%;
   margin: 0 auto;
   padding: 20px;
-  border: 1px solid #9E1B32;
-  border-radius: 20px;
-  background-color: #70757A;
+  border-collapse: separate;
+  border: none;
+  background: transparent;
+}
+
+table.game-container tbody tr td {
+  border: none;
+  margin: 5px;
 }
 
 .table.game-container:not(:last-child) {
