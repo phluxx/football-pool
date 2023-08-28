@@ -29,7 +29,10 @@
         </tr>
       </tbody>
     </table>
-
+    <div class="tiebreaker">
+      <label>{{ tiebreakerQuestion }}</label>
+      <input type="text" v-model="tiebreakerAnswer" @input="formatTiebreakerInput" maxlength="5">
+    </div>
     <button @click="savePicks">Save Picks</button>
   </div>
 </template>
@@ -50,6 +53,7 @@ export default {
   created() {
     this.fetchTeams();
     this.fetchGames();
+    this.fetchTiebreaker();
   },
   methods: {
     findNextSaturday() {
@@ -107,6 +111,17 @@ export default {
     },
     async savePicks() {
       // TODO: Write logic to save users' picks.
+    },
+    async fetchTiebreaker() {
+      try {
+        const response = await axios.get(`https://fbpsql.ewnix.net/api/tiebreaker/${this.nextSaturday}`);
+        this.tiebreakerQuestion = response.data.question;
+      } catch (error) {
+        console.error("Error fetching tiebreaker:", error);
+      }
+    },
+    formatTiebreakerInput() {
+      this.tiebreakerAnswer = this.tiebreakerAnswer.replace(/[^0-9]/g, '');
     }
   }
 };
