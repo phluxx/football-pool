@@ -30,7 +30,7 @@
 
     <button @click="savePicks">Save Picks</button>
   </div>
-  <div v-if="!isBettingOpen">
+  <div v-else>
     <h2>Pick 'em for the week of Saturday, {{ nextSaturday }}</h2>
     <p>Betting is closed for this week.</p>
   </div>
