@@ -122,7 +122,7 @@ export default {
     async fetchTiebreaker() {
       try {
         const response = await axios.get(`https://fbpsql.ewnix.net/api/gettiebreaker/${this.nextSaturday}`);
-        this.tiebreakerQuestion = response.data.question;
+        set(this.tiebreakerQuestion, response.data.tiebreakerQuestion)
       } catch (error) {
         console.error("Error fetching tiebreaker:", error);
       }
@@ -196,9 +196,13 @@ button:hover {
 
 table.game-container {
   width: 100%;
-  border-collapse: collapse;
-  margin: 0 auto;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin: 20px auto;
   max-width: 800px;
+  border: 2px solid #9E1B32;
+  border-radius: 10px;
+  overflow: hidden;
 }
 
 td.team-selection {
@@ -210,7 +214,7 @@ td.team-selection {
   transition: background-color 0.3s;
 }
 
-table.game-container tbody tr td.team-selection:hover {
+table.game-container tbody tr > td.team-selection:hover {
   background-color: rgba(255, 255, 255, 0.1);
 }
 
@@ -230,9 +234,3 @@ td.team-selected {
 }
 
 </style>
-
-
-
-
-
-
