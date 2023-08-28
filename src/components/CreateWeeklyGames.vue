@@ -16,7 +16,10 @@
 
       <input :disabled="!gameDate" type="number" step="0.5" v-model="game.spread"  @blur="enforceHalfPointSpreads(game)" placeholder="Spread" />
     </div>
-
+    <div class="tiebreaker-container">
+      <label for="tiebreakerQuestion">Tiebreaker Question:</label>
+      <input type="text" v-model="tiebreakerQuestion" id="tiebreakerQuestion" />
+    </div>
     <button @click="saveGames" class="betting-button">Save</button>
     
   </div>
@@ -35,6 +38,7 @@ export default {
       teams: [],
       games: Array.from({ length: 15 }, () => ({ favorite: null, underdog: null, spread: null })),
       saveMessage: "",  // For displaying a success/error message
+      tiebreakerQuestion: "",
     };
   },
   created() {
@@ -121,10 +125,15 @@ export default {
           games: this.games
         };
 
-        const response = await axios.post("https://fbpsql.ewnix.net/api/savegames", payload);
+        const tiebreakerPayload = {
+          tiebreakerQuestion: this.tiebreakerQuestion
+        };
+
+        await axios.post("https://fbpsql.ewnix.net/api/savegames", payload);
+        await axios.port("https://fbpsql.ewnix.net/api/savetiebreaker", tiebreakerPayload);
 
         // Display the response from the server
-        alert(response.data.status);
+       alert("Games saved!");
 
       } catch (error) {
         console.error("Error saving games:", error);
