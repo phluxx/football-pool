@@ -29,7 +29,7 @@
       </tbody>
     </table>
     <div class="tiebreaker">
-      <label>{{ tiebreakerQuestion }}</label>
+      <label>TIEBREAKER: {{ tiebreakerQuestion }}</label>
       <input type="text" v-model="tiebreakerAnswer" @input="formatTiebreakerInput" maxlength="5">
     </div>
     <button @click="savePicks">Save Picks</button>
@@ -46,7 +46,8 @@ export default {
       games: [],
       teams: [],
       picks: {},
-      nextSaturday: this.findNextSaturday()
+      nextSaturday: this.findNextSaturday(),
+      tiebreakerQuestion: ""
     };
   },
   created() {
@@ -138,6 +139,10 @@ body {
   background-color: #FFFFFF;
   font-family: 'Roboto', sans-serif;
   color: #000000;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100vh;
 }
 
 div {
@@ -238,6 +243,10 @@ table.game-container tbody tr td {
 
 .table.game-container:not(:last-child) {
   margin-bottom: 20px;
+}
+
+.tiebreaker {
+  width: fit-content;
 }
 
 </style>
