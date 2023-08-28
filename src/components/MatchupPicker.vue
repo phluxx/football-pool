@@ -123,10 +123,10 @@ h2 {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px 25px;
+  padding: 20px;
   box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.2);
   transition: transform 0.3s;
-  flex-direction: row;
+  flex-direction: column;
   padding: 15px;
 }
 
@@ -135,27 +135,27 @@ h2 {
 }
 
 h3 {
-  flex: 1;
+  margin-top: 10px;
   text-align: center;
-  margin-bottom: 15px;
 }
 
 .team-logo {
   width: 75px;
   height: 75px;
   border-radius: 50%; 
-  margin-right: 15px;
-  align-self: center;
+  margin-bottom: 5px;
 }
 
 .spread {
   font-weight: bold;
   font-size: 1.4em;
   background-color: #9E1B32;
+  color: #FFFFFF;
   padding: 10px 15px;
   border-radius: 10px;
   margin-left: 20px;
-  align-self: center;
+  align-self: stretch;
+  text-align: center;
 }
 
 button {
