@@ -112,7 +112,7 @@ export default {
     async savePicks() {
       try {
         await axios.post("https://fbpsql.ewnix.net/api/savepicks", { picks: this.picks });
-        await axios.port("https://fbpsql.ewnix.net/api/savetiebreaker", { tiebreaker: this.tiebreakerAnswer });
+        await axios.port("https://fbpsql.ewnix.net/api/saveusertiebreaker", { tiebreaker: this.tiebreakerAnswer });
       alert("Picks saved!");
       } catch (error) {
         console.error("Error saving picks:", error);
