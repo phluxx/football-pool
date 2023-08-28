@@ -218,24 +218,35 @@ h3 {
 
 .team-selection {
   cursor: pointer;
+  text-align: center;
+  padding: 20px;
+  width: 40%;
+  transition: background-color 0.3s;
+  border-radius: 10px;
 }
 
 .team-selection:not(.team-selected):hover {
-  background-color: rgba(173, 216, 230, 0.3);
+  background-color: rgba(128, 27, 50, 0.3);
+  border-radius: 10px;
 }
 
 /* Highlighting the selection */
 .team-selected {
-  background-color: rgba(0, 112, 201, 0.5); 
+  background-color: rgba(128, 27, 50, 0.5); 
+  border-radius: 10px;
 }
 
 .tiebreaker {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   width: fit-content;
   margin: 20px auto;
+}
+
+.tiebreaker label {
+  margin-bottom: 10px;
 }
 
 td.team-selection:hover, td.team-selected {
