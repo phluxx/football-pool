@@ -1,5 +1,5 @@
 <template>
-  <div v-if="isBettingOpen">
+  <div>
     <h2>Pick 'em for the week of Saturday, {{ nextSaturday }}</h2>
     
     <div v-for="(game, index) in games" :key="game.id" class="game-container">
@@ -30,10 +30,6 @@
 
     <button @click="savePicks">Save Picks</button>
   </div>
-  <div v-if="!isBettingOpen">
-    <h2>Betting is currently closed.</h2>
-    
-  </div>
 </template>
 
 
@@ -47,8 +43,6 @@ export default {
   setup() {
     const store = useStore();
     const isBettingOpen = computed(() => store.state.isBettingOpen);
-    
-    const nextSaturday = findNextSaturday();
 
     return {
       isBettingOpen,
@@ -61,6 +55,7 @@ export default {
       games: [],
       teams: [],
       picks: {},
+      nextSaturday: this.findNextSaturday(),
       tiebreakerQuestion: "",
     };
   },
