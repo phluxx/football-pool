@@ -2,7 +2,7 @@ import { createStore } from 'vuex';
 
 export default createStore({
   state: {
-    bettingOpen: true
+    isBettingOpen: true
   },
   mutations: {
     openBetting(state) {
@@ -15,7 +15,7 @@ export default createStore({
   actions: {},
   getters: {
     isBettingOpen(state) {
-      return state.bettingOpen;
+      return state.isBettingOpen;
     }
   }
 });
