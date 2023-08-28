@@ -1,6 +1,6 @@
 <template>
   <div v-if="isBettingOpen">
-    <div v-if="decodedUsername"><h3>Welcome, {{  decodedUsername }}!</h3></div>
+    <div v-if="decodedUsername"><h3>Welcome, {{  decodedUsername }}!</h3></div><br />
     <h2>Pick 'em for the week of Saturday, {{ nextSaturday }}</h2>
     
     <div v-for="(game, index) in games" :key="game.id" class="game-container">
@@ -120,8 +120,14 @@ export default {
     },
     async savePicks() {
       try {
-        await axios.post("https://fbpsql.ewnix.net/api/savepicks", { picks: this.picks });
-        await axios.port("https://fbpsql.ewnix.net/api/saveusertiebreaker", { tiebreaker: this.tiebreakerAnswer });
+        await axios.post("https://fbpsql.ewnix.net/api/savepicks", {
+          username: this.decodedUsername,
+          picks: this.picks
+        });
+        await axios.post("https://fbpsql.ewnix.net/api/saveusertiebreaker", {
+          username: this.decodedUsername,
+          tiebreaker: this.tiebreakerAnswer
+        });
       alert("Picks saved!");
       } catch (error) {
         console.error("Error saving picks:", error);
