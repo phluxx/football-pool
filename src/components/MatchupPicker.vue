@@ -137,7 +137,7 @@ export default {
     async fetchBettingStatus() {
       try {
         const response = await axios.get("https://fbpsql.ewnix.net/api/isbettingopen");
-        this.isBettingOpen = response.data.value === 1;
+        this.isBettingOpen = response.data.isBettingOpen;
       } catch (error) {
         console.error("Error fetching betting status.")
       }
