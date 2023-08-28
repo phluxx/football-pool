@@ -158,10 +158,11 @@ h3 {
   margin-top: 10px;
   text-align: center;
 }
+
 .team-logo {
   width: 75px;
   height: 75px;
-  border-radius: 50%; 
+  border-radius: 50%;
   margin-bottom: 5px;
 }
 
@@ -191,12 +192,37 @@ button {
 }
 
 button:hover {
-  background-color: #7a1526; 
+  background-color: #7a1526;
   transform: translateY(-3px);
 }
+
 table.game-container {
+  max-width: 800px;
   width: 100%;
-  border-collapse: collapse;
+  margin: 0 auto;
+  padding: 20px;
+  border-collapse: separate;
+  border: none;
+  background: transparent;
+}
+
+table.game-container tbody {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+td.team-selection, td.spread {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+td.spread {
+  width: 80px;
+  flex: 0.5;
 }
 
 td.team-selection {
@@ -211,45 +237,20 @@ td.team-selection:hover {
   background-color: rgba(255, 255, 255, 0.1);
 }
 
-td.spread {
-  width: 80px;
-}
-
-table.game-container tbody tr td {
-  border: 1px solid #9E1B32;
-  border-radius: 10px;
-  margin: 5px;
-}
-
 /* Highlighting the selection */
 td.team-selected {
-  background-color: rgba(0, 112, 201, 0.5); 
+  background-color: rgba(0, 112, 201, 0.5);
 }
 
-table.game-container {
-  max-width: 800px;
-  width: 100%;
-  margin: 0 auto;
-  padding: 20px;
-  border-collapse: separate;
-  border: none;
-  background: transparent;
-}
-
-table.game-container tbody tr td {
-  border: none;
-  margin: 5px;
-}
-
-.table.game-container:not(:last-child) {
+table.game-container:not(:last-child) {
   margin-bottom: 20px;
 }
 
 .tiebreaker {
   width: fit-content;
 }
-
 </style>
+
 
 
 
