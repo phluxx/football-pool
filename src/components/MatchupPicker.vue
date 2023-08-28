@@ -53,7 +53,7 @@ export default {
       picks: {},
       nextSaturday: this.findNextSaturday(),
       tiebreakerQuestion: "",
-      token: localStoate.getItem('token') || '',
+      token: localStorage.getItem('token') || '',
       decodedUsername: ''
     };
   },
