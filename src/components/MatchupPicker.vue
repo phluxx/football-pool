@@ -2,28 +2,38 @@
   <div>
     <h2>Pick 'em for the week of Saturday, {{ nextSaturday }}</h2>
 
-    <div v-for="(game, index) in games" :key="game.id" class="game-container">
-      <h3>Game {{ index + 1 }}</h3>
-      <div>
-        <img :src="getLogoURL(game.favorite)" alt="Favorite Team Logo" class="team-logo">
-        <span>Favorite:</span>
-        {{ getTeamName(game.favorite) }}
-        <input type="radio" v-model="picks[game.id]" :value="game.favorite">
-      </div>
-
-      <span class="spread">Spread: {{ game.spread }}</span>
-
-      <div>
-        <img :src="getLogoURL(game.underdog)" alt="Underdog Team Logo" class="team-logo">
-        <span>Underdog:</span>
-        {{ getTeamName(game.underdog) }}
-        <input type="radio" v-model="picks[game.id]" :value="game.underdog">
-      </div>
-    </div>
+    <table v-for="(game, index) in games" :key="game.id" class="game-container">
+      <thead>
+        <tr>
+          <th colspan="3">
+            <h3>Game {{ index + 1 }}</h3>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <!-- Favorite Team -->
+          <td class="team-selection" @click="selectTeam(game.id, game.favorite)">
+            <img :src="getLogoURL(game.favorite)" alt="Favorite Team Logo" class="team-logo">
+            <div>{{ getTeamName(game.favorite) }}</div>
+          </td>
+          
+          <!-- Spread -->
+          <td class="spread">-{{ game.spread }}</td>
+          
+          <!-- Underdog Team -->
+          <td class="team-selection" @click="selectTeam(game.id, game.underdog)">
+            <img :src="getLogoURL(game.underdog)" alt="Underdog Team Logo" class="team-logo">
+            <div>{{ getTeamName(game.underdog) }}</div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
 
     <button @click="savePicks">Save Picks</button>
   </div>
 </template>
+
 
 <script>
 import axios from "axios";
@@ -91,6 +101,9 @@ export default {
     getTeamName(uuid) {
       const team = this.teams.find(t => t.id === uuid);
       return team ? team.team : '';
+    },
+    selectTeam(gameId, teamId) {
+      this.$set(this.picks, gameId, teamId);
     },
     async savePicks() {
       // TODO: Write logic to save users' picks.
@@ -175,6 +188,38 @@ button:hover {
   background-color: #7a1526; 
   transform: translateY(-3px);
 }
+table.game-container {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+td.team-selection {
+  cursor: pointer;
+  text-align: center;
+  vertical-align: middle;
+  padding: 20px;
+  transition: background-color 0.3s;
+}
+
+td.team-selection:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+td.spread {
+  width: 80px;
+}
+
+table.game-container tbody tr td {
+  border: 1px solid #9E1B32;
+  border-radius: 10px;
+  margin: 5px;
+}
+
+/* Highlighting the selection */
+td.team-selected {
+  background-color: rgba(0, 112, 201, 0.5); /* Adjust color as needed */
+}
+
 </style>
 
 
