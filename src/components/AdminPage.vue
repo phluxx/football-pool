@@ -5,8 +5,8 @@
     <h1>Admin Panel</h1>
     <div class="admin-options">
       <div class="betting-controls">
-        <button class="betting-button" @click="openBetting">Open Betting</button>
-        <button class="betting-button" @click="closeBetting">Close Betting</button>
+        <button v-if="!isBettingOpen" class="betting-button" @click="openBetting">Open Betting</button>
+        <button v-if="isBettingOpen" class="betting-button" @click="closeBetting">Close Betting</button>
       </div>
       <router-link to="/admin/create">Create Weekly Games</router-link>
       <router-link to="/admin/updategames">Update Weekly Games</router-link>
@@ -16,17 +16,32 @@
 </template>
 
 <script>
+import { computed } from 'vue';
+import { useStore } from 'vuex';
+
 export default {
   name: 'AdminPage',
-  methods: {
-    openBetting() {
-      //Logic to open betting..
+  setup() {
+    const store = useStore();
+    const isBettingOpen = computed(() => store.state.isBettingOpen);
+
+    const openBetting = () => {
+      store.commit('openBetting');
       alert("Betting Opened!");
-      },
-    closeBetting() {
-      //Logic to close betting..
+    };
+    const closeBetting = () => {
+      store.commit('closeBetting');
       alert("Betting Closed!");
-      }
+    };
+
+    return {
+      isBettingOpen,
+      openBetting,
+      closeBetting
+    };
+  },
+  methods: {
+    // Any future methods will go here.
    }
 }
 </script>

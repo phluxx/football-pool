@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="isBettingOpen">
     <h2>Pick 'em for the week of Saturday, {{ nextSaturday }}</h2>
     
     <div v-for="(game, index) in games" :key="game.id" class="game-container">
@@ -30,21 +30,41 @@
 
     <button @click="savePicks">Save Picks</button>
   </div>
+  <div v-if="!isBettingOpen">
+    <h2>Betting is currently closed.</h2>
+    
+  </div>
 </template>
 
 
 
 <script>
 import axios from "axios";
+import { computed } from 'vue';
+import { useStore } from 'vuex';
 
 export default {
+  setup() {
+    const store = useStore();
+    const isBettingOpen = computed(() => store.state.isBettingOpen);
+
+    const toggleBettingStatus = () => {
+      store.commit('toggleBettingStatus');
+    };
+    const nextSaturday = findNextSaturday();
+
+    return {
+      isBettingOpen,
+      toggleBettingStatus,
+      nextSaturday
+    };
+  },
   data() {
     return {
       games: [],
       teams: [],
       picks: {},
-      nextSaturday: this.findNextSaturday(),
-      tiebreakerQuestion: ""
+      tiebreakerQuestion: "",
     };
   },
   created() {
