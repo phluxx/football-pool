@@ -46,7 +46,6 @@ export default {
 
     return {
       isBettingOpen,
-      toggleBettingStatus,
       nextSaturday
     };
   },
