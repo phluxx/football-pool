@@ -162,7 +162,7 @@ h3 {
 .team-logo {
   width: 75px;
   height: 75px;
-  border-radius: 50%;
+  border-radius: 50%; 
   margin-bottom: 5px;
 }
 
@@ -173,8 +173,6 @@ h3 {
   color: #FFFFFF;
   padding: 10px 15px;
   border-radius: 10px;
-  margin-left: 20px;
-  align-self: stretch;
   text-align: center;
 }
 
@@ -192,37 +190,15 @@ button {
 }
 
 button:hover {
-  background-color: #7a1526;
+  background-color: #7a1526; 
   transform: translateY(-3px);
 }
 
 table.game-container {
-  max-width: 800px;
   width: 100%;
+  border-collapse: collapse;
   margin: 0 auto;
-  padding: 20px;
-  border-collapse: separate;
-  border: none;
-  background: transparent;
-}
-
-table.game-container tbody {
-  display: flex;
-  width: 100%;
-  align-items: center;
-  justify-content: center;
-}
-
-td.team-selection, td.spread {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-td.spread {
-  width: 80px;
-  flex: 0.5;
+  max-width: 800px;
 }
 
 td.team-selection {
@@ -230,26 +206,31 @@ td.team-selection {
   text-align: center;
   vertical-align: middle;
   padding: 20px;
+  width: 40%; /* This will ensure that spread is centered */
   transition: background-color 0.3s;
 }
 
-td.team-selection:hover {
+table.game-container tbody tr td.team-selection:hover {
   background-color: rgba(255, 255, 255, 0.1);
+}
+
+td.spread {
+  width: 20%;
+  vertical-align: middle;
 }
 
 /* Highlighting the selection */
 td.team-selected {
-  background-color: rgba(0, 112, 201, 0.5);
-}
-
-table.game-container:not(:last-child) {
-  margin-bottom: 20px;
+  background-color: rgba(0, 112, 201, 0.5); 
 }
 
 .tiebreaker {
   width: fit-content;
+  margin: 20px auto;
 }
+
 </style>
+
 
 
 
