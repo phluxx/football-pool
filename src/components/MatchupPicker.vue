@@ -1,7 +1,7 @@
 <template>
   <div>
     <h2>Pick 'em for the week of Saturday, {{ nextSaturday }}</h2>
-
+    <div class="container">
     <table v-for="(game, index) in games" :key="game.id" class="game-container">
       <thead>
         <tr>
@@ -13,7 +13,7 @@
       <tbody>
         <tr>
           <!-- Favorite Team -->
-          <td class="team-selection" @click="selectTeam(game.id, game.favorite)">
+          <td class="team-selection" :class="{'team-selected': picks[game.id] === game.favorite}" @click="selectTeam(game.id, game.favorite)">
             <img :src="getLogoURL(game.favorite)" alt="Favorite Team Logo" class="team-logo">
             <div>{{ getTeamName(game.favorite) }}</div>
           </td>
@@ -22,13 +22,14 @@
           <td class="spread">-{{ game.spread }}</td>
           
           <!-- Underdog Team -->
-          <td class="team-selection" @click="selectTeam(game.id, game.underdog)">
+          <td class="team-selection" :class="{'team-selected': picks[game.id] === game.underdog}" @click="selectTeam(game.id, game.underdog)">
             <img :src="getLogoURL(game.underdog)" alt="Underdog Team Logo" class="team-logo">
             <div>{{ getTeamName(game.underdog) }}</div>
           </td>
         </tr>
       </tbody>
     </table>
+    </div>
     <div class="tiebreaker">
       <label>{{ tiebreakerQuestion }}</label>
       <input type="text" v-model="tiebreakerAnswer" @input="formatTiebreakerInput" maxlength="5">
@@ -100,7 +101,7 @@ export default {
       }
     },
     getLogoURL(uuid) {
-      return `https://sjc1.vultrobjects.com/football-pool/logos/${uuid}/logo.png`;
+      return `https://sjc1.vultrobjects.com/football-pool/logos2/${uuid}/logo.png`;
     },
     getTeamName(uuid) {
       const team = this.teams.find(t => t.id === uuid);
@@ -155,6 +156,14 @@ h3 {
   text-align: center;
 }
 
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #9E1B32;
+  border-radius: 20px;
+  background-color: #70757A;
+}
 .team-logo {
   width: 75px;
   height: 75px;
@@ -220,7 +229,7 @@ table.game-container tbody tr td {
 
 /* Highlighting the selection */
 td.team-selected {
-  background-color: rgba(0, 112, 201, 0.5); /* Adjust color as needed */
+  background-color: rgba(0, 112, 201, 0.5); 
 }
 
 </style>
