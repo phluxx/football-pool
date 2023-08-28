@@ -122,7 +122,7 @@ export default {
     async fetchTiebreaker() {
       try {
         const response = await axios.get(`https://fbpsql.ewnix.net/api/gettiebreaker/${this.nextSaturday}`);
-        set(this.tiebreakerQuestion, response.data.tiebreakerQuestion)
+        this.tiebreakerQuestion = response.data.tiebreakerQuestion;
       } catch (error) {
         console.error("Error fetching tiebreaker:", error);
       }
@@ -132,6 +132,7 @@ export default {
     }
   }
 };
+
 </script>
 
 <style scoped>
