@@ -1,6 +1,6 @@
 <template>
   <div v-if="isBettingOpen">
-    <div v-if="decodedUsername">Welcome, {{  decodedUsername }}!</div>
+    <div v-if="decodedUsername"><h3>Welcome, {{  decodedUsername }}!</h3></div>
     <h2>Pick 'em for the week of Saturday, {{ nextSaturday }}</h2>
     
     <div v-for="(game, index) in games" :key="game.id" class="game-container">
