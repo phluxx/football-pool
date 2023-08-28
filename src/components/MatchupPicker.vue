@@ -121,7 +121,7 @@ export default {
     },
     async savePicks() {
       try {
-        await axios.post("https://fbpsql.ewnix.net/api/savepicks", {
+        await axios.post("https://fbpsql.ewnix.net/api/saveuserpicks", {
           username: this.decodedUsername,
           picks: this.picks
         });
