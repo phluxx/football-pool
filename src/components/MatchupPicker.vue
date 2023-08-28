@@ -1,40 +1,37 @@
 <template>
   <div>
     <h2>Pick 'em for the week of Saturday, {{ nextSaturday }}</h2>
-    <table v-for="(game, index) in games" :key="game.id" class="game-container">
-      <thead>
-        <tr>
-          <th colspan="3">
-            <h3>Game {{ index + 1 }}</h3>
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <!-- Favorite Team -->
-          <td class="team-selection" :class="{'team-selected': picks[game.id] === game.favorite}" @click="selectTeam(game.id, game.favorite)">
-            <img :src="getLogoURL(game.favorite)" alt="Favorite Team Logo" class="team-logo">
-            <div>{{ getTeamName(game.favorite) }}</div>
-          </td>
-          
-          <!-- Spread -->
-          <td class="spread">-{{ game.spread }}</td>
-          
-          <!-- Underdog Team -->
-          <td class="team-selection" :class="{'team-selected': picks[game.id] === game.underdog}" @click="selectTeam(game.id, game.underdog)">
-            <img :src="getLogoURL(game.underdog)" alt="Underdog Team Logo" class="team-logo">
-            <div>{{ getTeamName(game.underdog) }}</div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    
+    <div v-for="(game, index) in games" :key="game.id" class="game-container">
+      
+      <h3>Game {{ index + 1 }}</h3>
+      
+      <!-- Favorite Team -->
+      <div class="team-selection" :class="{'team-selected': picks[game.id] === game.favorite}" @click="selectTeam(game.id, game.favorite)">
+        <img :src="getLogoURL(game.favorite)" alt="Favorite Team Logo" class="team-logo">
+        <div>{{ getTeamName(game.favorite) }}</div>
+      </div>
+      
+      <!-- Spread -->
+      <div class="spread">-{{ game.spread }}</div>
+      
+      <!-- Underdog Team -->
+      <div class="team-selection" :class="{'team-selected': picks[game.id] === game.underdog}" @click="selectTeam(game.id, game.underdog)">
+        <img :src="getLogoURL(game.underdog)" alt="Underdog Team Logo" class="team-logo">
+        <div>{{ getTeamName(game.underdog) }}</div>
+      </div>
+      
+    </div>
+
     <div class="tiebreaker">
-      <label>TIEBREAKER: {{ tiebreakerQuestion }}</label>
+      <label>TIEBREAKER: {{ tiebreakerQuestion }}</label><br />
       <input type="text" v-model="tiebreakerAnswer" @input="formatTiebreakerInput" maxlength="5">
     </div>
+
     <button @click="savePicks">Save Picks</button>
   </div>
 </template>
+
 
 
 <script>
@@ -155,11 +152,6 @@ h2 {
   margin-bottom: 40px;
 }
 
-h3 {
-  margin-top: 10px;
-  text-align: center;
-}
-
 .team-logo {
   width: 75px;
   height: 75px;
@@ -195,41 +187,45 @@ button:hover {
   transform: translateY(-3px);
 }
 
-table.game-container {
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: 0;
-  margin: 20px auto;
-  max-width: 800px;
-  border: none;
-  border-radius: 10px;
-  overflow: hidden;
-}
-
-border.game-container thead {
+.game-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   border-bottom: 2px solid #9E1B32;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  background-color: #fff;
+  position: relative;  /* added for positioning the h3 */
 }
 
-td.team-selection {
-  cursor: pointer;
+h3 {
+  position: absolute;
+  top: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #fff;
+  padding: 0 10px;
+  z-index: 1;  /* to ensure h3 is above other elements */
+}
+
+.team-selection, .spread {
+  flex: 1;
   text-align: center;
-  vertical-align: middle;
-  padding: 20px;
-  width: 40%; /* This will ensure that spread is centered */
+  margin: 0 10px;
   transition: background-color 0.3s;
 }
 
-td.team-selection:not(.team-selected):hover {
+.team-selection {
+  cursor: pointer;
+}
+
+.team-selection:not(.team-selected):hover {
   background-color: rgba(255, 255, 255, 0.1);
 }
 
-td.spread {
-  width: 20%;
-  vertical-align: middle;
-}
-
 /* Highlighting the selection */
-td.team-selected {
+.team-selected {
   background-color: rgba(0, 112, 201, 0.5); 
 }
 
@@ -237,5 +233,6 @@ td.team-selected {
   width: fit-content;
   margin: 20px auto;
 }
+
 
 </style>
