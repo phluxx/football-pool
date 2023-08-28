@@ -40,20 +40,12 @@
 
 <script>
 import axios from "axios";
-import { computed } from 'vue';
-import { useStore } from 'vuex';
+
 
 export default {
-  setup() {
-    const store = useStore();
-    const isBettingOpen = computed(() => store.state.isBettingOpen);
-
-    return {
-      isBettingOpen
-    };
-  },
   data() {
     return {
+      isBettingOpen: false,
       games: [],
       teams: [],
       picks: {},
@@ -65,6 +57,7 @@ export default {
     this.fetchTeams();
     this.fetchGames();
     this.fetchTiebreaker();
+    this.fetchBettingStatus();
   },
   methods: {
     findNextSaturday() {
@@ -140,6 +133,14 @@ export default {
     },
     formatTiebreakerInput() {
       this.tiebreakerAnswer = this.tiebreakerAnswer.replace(/[^0-9]/g, '');
+    },
+    async fetchBettingStatus() {
+      try {
+        const response = await axios.get("https://fbpsql.ewnix.net/api/isBettingOpen");
+        this.isBettingOpen = response.data.value === 1;
+      } catch (error) {
+        console.error("Error fetching betting status.")
+      }
     }
   }
 };

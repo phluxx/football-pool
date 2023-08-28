@@ -16,32 +16,47 @@
 </template>
 
 <script>
-import { computed } from 'vue';
-import { useStore } from 'vuex';
+import axios from 'axios';
 
 export default {
   name: 'AdminPage',
-  setup() {
-    const store = useStore();
-    const isBettingOpen = computed(() => store.state.isBettingOpen);
-
-    const openBetting = () => {
-      store.commit('openBetting');
-      alert("Betting Opened!");
-    };
-    const closeBetting = () => {
-      store.commit('closeBetting');
-      alert("Betting Closed!");
-    };
-
-    return {
-      isBettingOpen,
-      openBetting,
-      closeBetting
-    };
-  },
+    data() {
+      return {
+        isBettingOpen: false
+      };
+    },
+    created() {
+      this.fetchBettingStatus();
+    },
   methods: {
-    // Any future methods will go here.
+     async fetchBettingStatus() {
+      try {
+        const response = await axios.get('https://fbpsql.ewnix.net/api/isbettingopen');
+        this.isBettingOpen = response.data === 1;
+      } catch (error) {
+        console.error('Error fetching betting status:', error);
+      }
+     },
+     async openBetting() {
+      try {
+        await axios.post('https://fbpsql.ewnix.net/api/openBetting');
+        this.isBettingOpen = true;
+        alert("Betting Opened!");
+      } catch (error) {
+        console.error('Error opening betting:', error);
+        alert('Error opening betting!');
+       }
+      },
+      async closeBetting() {
+        try {
+          await axios.post('https://hbpsql.ewnix.net/api/closeBetting');
+          this.isBettingOpen = false;
+          alert("Betting Closed!");
+      } catch (error) {
+        console.error('Error closing betting:', error);
+        alert("Error closing betting!");
+      }
+     }
    }
 }
 </script>
