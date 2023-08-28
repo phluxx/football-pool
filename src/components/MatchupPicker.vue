@@ -1,5 +1,6 @@
 <template>
   <div v-if="isBettingOpen">
+    <div v-if="decodedUsername">Welcome, {{  decodedUsername }}!</div>
     <h2>Pick 'em for the week of Saturday, {{ nextSaturday }}</h2>
     
     <div v-for="(game, index) in games" :key="game.id" class="game-container">
@@ -41,7 +42,7 @@
 
 <script>
 import axios from "axios";
-
+import jwtDecode from 'jwt-decode';
 
 export default {
   data() {
@@ -52,6 +53,8 @@ export default {
       picks: {},
       nextSaturday: this.findNextSaturday(),
       tiebreakerQuestion: "",
+      token: localStoate.getItem('token') || '',
+      decodedUsername: ''
     };
   },
   created() {
@@ -59,6 +62,7 @@ export default {
     this.fetchGames();
     this.fetchTiebreaker();
     this.fetchBettingStatus();
+    this.decodeToken();
   },
   methods: {
     findNextSaturday() {
@@ -141,6 +145,16 @@ export default {
         this.isBettingOpen = response.data.isBettingOpen;
       } catch (error) {
         console.error("Error fetching betting status.")
+      }
+    },
+    decodeToken() {
+      if (this.token) {
+        try {
+          let decodedToken = jwtDecode(this.token);
+          this.decodedUsername = decodedToken.username;
+        } catch (err) {
+          console.error('Error decoding token: ', err);
+        }
       }
     }
   }
