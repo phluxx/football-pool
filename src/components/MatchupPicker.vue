@@ -230,8 +230,16 @@ h3 {
 }
 
 .tiebreaker {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
   width: fit-content;
   margin: 20px auto;
+}
+
+td.team-selection:hover, td.team-selected {
+  border-radius: 10px;
 }
 
 @media (min-width: 768px) {
