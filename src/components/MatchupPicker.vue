@@ -86,8 +86,7 @@ export default {
       }
     },
     getLogoURL(uuid) {
-      const hexUUID = uuid.replace(/-/g, "").toUpperCase();
-      return `https://sjc1.vultrobjects.com/football-pool/logos/${hexUUID}/logo.png`;
+      return `https://sjc1.vultrobjects.com/football-pool/logos/${uuid}/logo.png`;
     },
     getTeamName(uuid) {
       const team = this.teams.find(t => t.id === uuid);
@@ -127,6 +126,8 @@ h2 {
   padding: 15px 25px;
   box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.2);
   transition: transform 0.3s;
+  flex-direction: row;
+  padding: 15px;
 }
 
 .game-container:hover {
@@ -134,6 +135,7 @@ h2 {
 }
 
 h3 {
+  flex: 1;
   text-align: center;
   margin-bottom: 15px;
 }
@@ -143,6 +145,7 @@ h3 {
   height: 75px;
   border-radius: 50%; 
   margin-right: 15px;
+  align-self: center;
 }
 
 .spread {
@@ -151,6 +154,8 @@ h3 {
   background-color: #9E1B32;
   padding: 10px 15px;
   border-radius: 10px;
+  margin-left: 20px;
+  align-self: center;
 }
 
 button {
