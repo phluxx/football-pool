@@ -47,10 +47,7 @@ export default {
   setup() {
     const store = useStore();
     const isBettingOpen = computed(() => store.state.isBettingOpen);
-
-    const toggleBettingStatus = () => {
-      store.commit('toggleBettingStatus');
-    };
+    
     const nextSaturday = findNextSaturday();
 
     return {
