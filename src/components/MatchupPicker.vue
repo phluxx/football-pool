@@ -53,6 +53,7 @@ export default {
       picks: {},
       nextSaturday: this.findNextSaturday(),
       tiebreakerQuestion: "",
+      tiebreakerID,
       token: localStorage.getItem('token') || '',
       decodedUsername: ''
     };
@@ -126,6 +127,7 @@ export default {
         });
         await axios.post("https://fbpsql.ewnix.net/api/saveusertiebreaker", {
           username: this.decodedUsername,
+          qid: this.tiebreakerID,
           tiebreaker: this.tiebreakerAnswer
         });
       alert("Picks saved!");
@@ -138,6 +140,7 @@ export default {
       try {
         const response = await axios.get(`https://fbpsql.ewnix.net/api/gettiebreaker/${this.nextSaturday}`);
         this.tiebreakerQuestion = response.data.tiebreakerQuestion;
+        this.tiebreakerID = response.data.id;
       } catch (error) {
         console.error("Error fetching tiebreaker:", error);
       }
