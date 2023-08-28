@@ -221,7 +221,7 @@ h3 {
 }
 
 .team-selection:not(.team-selected):hover {
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: rgba(173, 216, 230, 0.3);
 }
 
 /* Highlighting the selection */
@@ -232,6 +232,13 @@ h3 {
 .tiebreaker {
   width: fit-content;
   margin: 20px auto;
+}
+
+@media (min-width: 768px) {
+  div {
+    max-width: 800px;
+    margin: 20px auto;
+  }
 }
 
 
