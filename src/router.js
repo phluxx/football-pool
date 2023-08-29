@@ -8,6 +8,7 @@ import UpdateWeeklyGames from './components/UpdateWeeklyGames.vue'
 import ViewMyPicks from './components/ViewMyPicks.vue'
 import ViewAllPicks from './components/ViewAllPicks.vue'
 import UserPortal from './components/UserPortal.vue'
+import RegisterPage from './components/Register.vue'
 
 const routes = [
   { path: '/', redirect: '/login' },
@@ -20,6 +21,7 @@ const routes = [
   { path: '/admin/updategames', name: 'UpdateWeeklyGames', component: UpdateWeeklyGames},
   { path: '/admin/updatescores', name: 'UpdateScores', component: UpdateScores },
   { path: '/userportal', name: 'UserPortal', component: UserPortal },
+  { path: '/register', name: 'RegisterPage', component: RegisterPage },
 ]
 
 const router = createRouter({
