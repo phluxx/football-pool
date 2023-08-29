@@ -8,7 +8,7 @@ import UpdateWeeklyGames from './components/UpdateWeeklyGames.vue'
 import ViewMyPicks from './components/ViewMyPicks.vue'
 import ViewAllPicks from './components/ViewAllPicks.vue'
 import UserPortal from './components/UserPortal.vue'
-import RegisterPage from './components/Register.vue'
+import RegisterPage from './components/RegisterPage.vue'
 
 const routes = [
   { path: '/', redirect: '/login' },
