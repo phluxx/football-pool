@@ -80,6 +80,15 @@ input:focus {
   outline: none;
   background-color: rgba(235, 235, 235, 1);
 }
+router-link {
+  color: #9E1B32;
+  text-decoration: none;
+}
+
+router-link:hover {
+  color: #7e1729;
+  text-decoration: none;
+}
 
 @media (prefers-color-scheme: light) {
   input {
