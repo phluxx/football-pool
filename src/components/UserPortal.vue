@@ -4,9 +4,10 @@
       <h1>Welcome {{ decodedUsername }}!</h1>
       <div class="user-options">
         <router-link to="/pick">Enter New Picks</router-link>
-        <router-link to="/uchange">Change Picks</router-link>
+        <router-link to="/change">Change Picks</router-link>
         <router-link to="/viewmypicks">View My Picks</router-link>
         <router-link to="/viewallpicks">View All Picks</router-link>
+        <router-link to="/logout">Logout</router-link>
       </div>
       </div>
       <div v-else>You must log in to see this page!
@@ -15,7 +16,6 @@
   </template>
   
   <script>
-  import axios from 'axios';
   import jwtDecode from 'jwt-decode';
 
   export default {

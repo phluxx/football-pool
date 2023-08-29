@@ -44,7 +44,7 @@ export default {
 
           this.password = '';
 
-          this.$router.push('/pick');
+          this.$router.push('/userportal');
         } catch (err) {
           alert("Error during the login process!");
         }
