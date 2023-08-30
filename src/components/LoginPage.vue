@@ -8,6 +8,8 @@
 </template>
 
 <script>
+import BettingDataService from '../services/BettingDataService';
+
 export default {
   data() {
     return {
@@ -18,25 +20,7 @@ export default {
   methods: {
     async login() {
       try {
-        let response = await fetch("https://fbpsql.ewnix.net/api/login", {
-          method: "POST",
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            username: this.username,
-            password: this.password
-          })
-          });
-
-          let responseBody = await response.json();
-
-          if (response.status !== 200) {
-            alert(responseBody.message || "Something went wrong!");
-            return;
-          }
-
-          let token = await responseBody.token;
+        let token = await BettingDataService.getLoginToken({username: this.username, password: this.password});
 
           // Store the token in local storage
 

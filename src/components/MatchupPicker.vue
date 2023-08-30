@@ -43,17 +43,18 @@
 <script>
 import axios from "axios";
 import jwtDecode from 'jwt-decode';
+import BettingDataService from '../services/BettingDataService';
 
 export default {
   data() {
     return {
-      isBettingOpen: false,
+      isBettingOpen: true,
       games: [],
       teams: [],
       picks: {},
+      tiebreakerID: '',
+      tiebreakerQuestion: '',
       nextSaturday: this.findNextSaturday(),
-      tiebreakerQuestion: "",
-      tiebreakerID: null,
       token: localStorage.getItem('token') || '',
       decodedUsername: ''
     };
@@ -94,31 +95,23 @@ export default {
       return date.toISOString().split('T')[0];
     },
     async fetchTeams() {
-      try {
-        const response = await axios.get("https://fbpsql.ewnix.net/api/populateteams");
-        this.teams = response.data;
-      } catch (error) {
-        console.error("Error fetching teams:", error);
-      }
+     this.teams = await BettingDataService.fetchTeams();
+     console.log(this.teams);
     },
     async fetchGames() {
-      try {
-        const response = await axios.get(`https://fbpsql.ewnix.net/api/matchmaker/${this.nextSaturday}`);
-        this.games = response.data;
-      } catch (error) {
-        console.error("Error fetching games:", error);
-      }
+      this.games = await BettingDataService.fetchGames(this.nextSaturday);
     },
     getLogoURL(uuid) {
       return `https://sjc1.vultrobjects.com/football-pool/logos2/${uuid}/logo.png`;
     },
     getTeamName(uuid) {
-      const team = this.teams.find(t => t.id === uuid);
-      return team ? team.team : '';
+      const team = this.teams.find(t => t.ID === uuid);
+      return team ? team.Name : '';
     },
     selectTeam(gameId, teamId) {
       this.picks[gameId] = teamId;
     },
+
     async savePicks() {
       try {
         await axios.post("https://fbpsql.ewnix.net/api/saveuserpicks", {
@@ -137,13 +130,9 @@ export default {
       }
     },
     async fetchTiebreaker() {
-      try {
-        const response = await axios.get(`https://fbpsql.ewnix.net/api/gettiebreaker/${this.nextSaturday}`);
-        this.tiebreakerQuestion = response.data.tiebreakerQuestion;
-        this.tiebreakerID = response.data.id;
-      } catch (error) {
-        console.error("Error fetching tiebreaker:", error);
-      }
+      const response = await BettingDataService.fetchTiebreaker(this.nextSaturday);
+      this.tiebreakerID = response.id;
+      this.tiebreakerQuestion = response.tiebreakerQuestion;
     },
     formatTiebreakerInput() {
       this.tiebreakerAnswer = this.tiebreakerAnswer.replace(/[^0-9]/g, '');
