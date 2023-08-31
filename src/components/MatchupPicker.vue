@@ -113,9 +113,10 @@ export default {
     },
 
     async savePicks() {
-      await BettingDataService.saveUserPicks(this.picks);
+      await BettingDataService.saveUserPicks({picks: this.picks});
       await BettingDataService.saveUserTiebreaker(this.tiebreakerID, this.tiebreakerAnswer);
     },
+
     async fetchTiebreaker() {
       const response = await BettingDataService.fetchTiebreaker(this.nextSaturday);
       this.tiebreakerID = response.id;
