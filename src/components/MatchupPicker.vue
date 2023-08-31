@@ -120,22 +120,29 @@ export default {
       this.picks[gameId] = teamId;
     },
     async savePicks() {
-      try {
-        await axios.post("https://fbpsql.ewnix.net/api/saveuserpicks", {
-          username: this.decodedUsername,
-          picks: this.picks
-        });
-        await axios.post("https://fbpsql.ewnix.net/api/saveusertiebreaker", {
-          username: this.decodedUsername,
-          qid: this.tiebreakerID,
-          tiebreaker: this.tiebreakerAnswer
-        });
-      alert("Picks saved!");
-      } catch (error) {
-        console.error("Error saving picks:", error);
-        alert("Error saving picks!");
-      }
-    },
+  try {
+    const headers = {
+      Authorization: `Bearer ${this.token}`
+    };
+
+    await axios.post("https://fbpsql.ewnix.net/api/saveuserpicks", {
+      username: this.decodedUsername,
+      picks: this.picks
+    }, { headers: headers });
+
+    await axios.post("https://fbpsql.ewnix.net/api/saveusertiebreaker", {
+      username: this.decodedUsername,
+      qid: this.tiebreakerID,
+      tiebreaker: this.tiebreakerAnswer
+    }, { headers: headers });
+
+    alert("Picks saved!");
+  } catch (error) {
+    console.error("Error saving picks:", error);
+    alert("Error saving picks!");
+  }
+},
+
     async fetchTiebreaker() {
       try {
         const response = await axios.get(`https://fbpsql.ewnix.net/api/gettiebreaker/${this.nextSaturday}`);
