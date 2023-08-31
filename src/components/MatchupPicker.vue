@@ -105,29 +105,16 @@ export default {
       return `https://sjc1.vultrobjects.com/football-pool/logos2/${uuid}/logo.png`;
     },
     getTeamName(uuid) {
-      const team = this.teams.find(t => t.ID === uuid);
-      return team ? team.Name : '';
+      const team = this.teams.find(t => t.id === uuid);
+      return team ? team.team : '';
     },
     selectTeam(gameId, teamId) {
       this.picks[gameId] = teamId;
     },
 
     async savePicks() {
-      try {
-        await axios.post("https://fbpsql.ewnix.net/api/saveuserpicks", {
-          username: this.decodedUsername,
-          picks: this.picks
-        });
-        await axios.post("https://fbpsql.ewnix.net/api/saveusertiebreaker", {
-          username: this.decodedUsername,
-          qid: this.tiebreakerID,
-          tiebreaker: this.tiebreakerAnswer
-        });
-      alert("Picks saved!");
-      } catch (error) {
-        console.error("Error saving picks:", error);
-        alert("Error saving picks!");
-      }
+      await BettingDataService.saveUserPicks(this.picks);
+      await BettingDataService.saveUserTiebreaker(this.tiebreakerID, this.tiebreakerAnswer);
     },
     async fetchTiebreaker() {
       const response = await BettingDataService.fetchTiebreaker(this.nextSaturday);

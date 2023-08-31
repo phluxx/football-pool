@@ -12,6 +12,11 @@ interface ResponseBody {
 }
 
 class BettingDataService {
+    private token: string;
+
+    constructor() {
+        this.token = localStorage.getItem('token') || '';
+    }
 
     private async post(url: string, data: any): Promise<ResponseBody> {
         var rb: ResponseBody
@@ -40,7 +45,11 @@ class BettingDataService {
     private async put(url: string, data: any): Promise<ResponseBody> {
             var rb: ResponseBody
         try {
-            const response = await http.put(url, data);
+            const response = await http.put(url, data, {
+                headers: {
+                    'Authorization': `Bearer ${this.token}`
+                }
+            });
             rb = { data: response.data, code: response.status };
         } catch (err: any | AxiosError) {
             if (axios.isAxiosError(err) && err.response) {
@@ -99,6 +108,18 @@ class BettingDataService {
 
     public async fetchTiebreaker(date: any): Promise<any> {
         return await (await this.get(`/api/tiebreaker/inquiry/${date}`)).data;
+    }
+
+    public async saveUserPicks(picks: any): Promise<any> {
+        return await (await this.put(`/api/picks`, picks)).data;
+    }
+
+    public async saveUserTiebreaker(tiebreakerID: string, tiebreakerAnswer: any): Promise<any> {
+        const tiebreakerData = {
+            qid: tiebreakerID,
+            tiebreaker: tiebreakerAnswer
+        }
+        return await (await this.put(`/api/tiebreaker/response`, tiebreakerData)).data;
     }
 };
 
