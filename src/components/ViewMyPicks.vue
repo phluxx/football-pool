@@ -124,7 +124,7 @@ export default {
     async savePicks() {
   try {
     // Check if all 15 games have a selected winner
-    const allGamesSelected = this.picks.length === 15 && !this.picks.includes(null);
+    const allGamesSelected = Object.keys(this.picks).length === 15 && !Object.values(this.picks).includes(null);
 
     // Check if the tiebreaker has been filled out
     const tiebreakerFilled = this.tiebreakerAnswer !== null && this.tiebreakerAnswer !== '';
