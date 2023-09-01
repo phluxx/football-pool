@@ -147,6 +147,7 @@ export default {
       }, { headers: headers });
 
       alert("Picks saved!");
+      this.$router.push('/userportal');
     } else {
       // Show an alert with what the user needs to do
       let errorMessage = "Please ensure:";
