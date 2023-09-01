@@ -192,14 +192,27 @@ export default {
     },
 
     async fetchUserPicks() {
-      try {
-        const response = await axios.get(`https://fbpsql.ewnix.net/api/getuserpicks/${this.decodedUsername}/${this.nextSaturday}`);
-        this.picks = response.data || {};
-      } catch (error) {
-        console.error("Error fetching user picks:", error);
-        alert("Error fetching user picks!");
-      }
-    },
+  const url = `https://fbpsql.ewnix.net/api/getuserpicks/${this.decodedUsername}/${this.nextSaturday}`;
+  
+  try {
+    const response = await axios.get(url);
+
+    if (response.data) {
+      // Initializing an empty object for picks
+      this.picks = {};
+
+      // Looping through the response data and merging each pick
+      response.data.forEach(userPick => {
+        this.picks = {
+          ...this.picks,
+          ...userPick.picks
+        };
+      });
+    }
+  } catch (error) {
+    console.error("Error fetching user's picks:", error);
+  }
+},
 
     async fetchUserTiebreaker() {
       try {
