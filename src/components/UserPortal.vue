@@ -4,8 +4,7 @@
       <h1>Welcome {{ decodedUsername }}!</h1>
       <div class="user-options">
         <router-link to="/pick">Enter New Picks</router-link>
-        <router-link to="/change">Change Picks</router-link>
-        <router-link to="/viewmypicks">View My Picks</router-link>
+        <router-link to="/viewmypicks">View/Change My Picks</router-link>
         <router-link to="/viewallpicks">View All Picks</router-link>
         <router-link to="/logout">Logout</router-link>
       </div>
