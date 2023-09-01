@@ -121,22 +121,37 @@ export default {
     },
     async savePicks() {
   try {
-    const headers = {
-      Authorization: `Bearer ${this.token}`
-    };
+    // Check if all 15 games have a selected winner
+    const allGamesSelected = this.picks.length === 15 && !this.picks.includes(null);
 
-    await axios.post("https://fbpsql.ewnix.net/api/saveuserpicks", {
-      username: this.decodedUsername,
-      picks: this.picks
-    }, { headers: headers });
+    // Check if the tiebreaker has been filled out
+    const tiebreakerFilled = this.tiebreakerAnswer !== null && this.tiebreakerAnswer !== '';
 
-    await axios.post("https://fbpsql.ewnix.net/api/saveusertiebreaker", {
-      username: this.decodedUsername,
-      qid: this.tiebreakerID,
-      tiebreaker: this.tiebreakerAnswer
-    }, { headers: headers });
+    // Validate before sending request
+    if (allGamesSelected && tiebreakerFilled) {
+      const headers = {
+        Authorization: `Bearer ${this.token}`
+      };
 
-    alert("Picks saved!");
+      await axios.post("https://fbpsql.ewnix.net/api/saveuserpicks", {
+        username: this.decodedUsername,
+        picks: this.picks
+      }, { headers: headers });
+
+      await axios.post("https://fbpsql.ewnix.net/api/saveusertiebreaker", {
+        username: this.decodedUsername,
+        qid: this.tiebreakerID,
+        tiebreaker: this.tiebreakerAnswer
+      }, { headers: headers });
+
+      alert("Picks saved!");
+    } else {
+      // Show an alert with what the user needs to do
+      let errorMessage = "Please ensure:";
+      if (!allGamesSelected) errorMessage += "\n- All 15 games have a selected winner.";
+      if (!tiebreakerFilled) errorMessage += "\n- The tiebreaker has been filled out.";
+      alert(errorMessage);
+    }
   } catch (error) {
     console.error("Error saving picks:", error);
     alert("Error saving picks!");
