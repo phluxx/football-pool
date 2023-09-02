@@ -68,27 +68,26 @@ export default {
   methods: {
     findNextSaturday() {
   let date = new Date();
-  console.log("Initial Date:", date);  // Debug
-
+  const today = date.getDay();
   const currentDateIso = date.toISOString().split('T')[0];
-  console.log("Today's Date ISO:", currentDateIso);  // Debug
 
   // Since the season doesn't start until 9/2, let's start with that date.
   if (currentDateIso < '2023-09-02') {
     return '2023-09-02';
   }
 
-  // Calculate the number of days to the next Saturday
-  let daysToNextSaturday = (6 - date.getDay() + 1) % 7;
-  if (daysToNextSaturday === 0) {
-    daysToNextSaturday = 7;
+  // If today is Saturday, return today's date
+  if (today === 6) {
+    return currentDateIso;
   }
 
-  date.setDate(date.getDate() + daysToNextSaturday);
-  console.log("Final Date:", date);  // Debug
+  // Otherwise, find the next Saturday
+  let daysUntilNextSaturday = 6 - today;
+  date.setDate(date.getDate() + daysUntilNextSaturday);
   
   return date.toISOString().split('T')[0];
 },
+
 
     async fetchTeams() {
       try {
