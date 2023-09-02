@@ -69,32 +69,26 @@ export default {
   },
   methods: {
     findNextSaturday() {
-      let date = new Date();
-      const today = date.getDay();
-      const currentDateIso = date.toISOString().split('T')[0];
+  let date = new Date();
+  const today = date.getDay();
+  const currentDateIso = date.toISOString().split('T')[0];
 
-      // Since the season doesn't start until 9/2, let's start with that date.
-      if (currentDateIso < '2023-09-02') {
-        return '2023-09-02';
-      }
+  // Since the season doesn't start until 9/2, let's start with that date.
+  if (currentDateIso < '2023-09-02') {
+    return '2023-09-02';
+  }
 
-      // If today is Saturday, return today's date
-      if (today === 6) {
-        return date.toISOString().split('T')[0];
-      }
+  // If today is Saturday, return today's date
+  if (today === 5) {
+    return currentDateIso;
+  }
 
-      // If today is Sunday, return yesterday's date
-      if (today === 0) {
-        date.setDate(date.getDate() -1);
-        return date.toISOString().split('T')[0];
-      }
-
-      // Otherwise, find the next Saturday
-      while (date.getDay() !== 6) {
-        date.setDate(date.getDate() + 1);
-      }
-      return date.toISOString().split('T')[0];
-    },
+  // Otherwise, find the next Saturday
+  let daysUntilNextSaturday = 5 - today;
+  date.setDate(date.getDate() + daysUntilNextSaturday);
+  
+  return date.toISOString().split('T')[0];
+},
     async fetchTeams() {
       try {
         const response = await axios.get("https://fbpsql.ewnix.net/api/populateteams");
