@@ -1,26 +1,32 @@
 <template>
-    <div class="container">
-      <h1>Login</h1>
-      <input v-model="username" placeholder="Username" />
-      <input type="password" v-model="password" placeholder="Password" />
-      <button @click="login">Login</button>
-    </div>
-  </template>
+  <div>
+      <ul>
+          <li v-for="username in usernames" :key="username">
+              <router-link :to="`/viewallpicks/${username}`">{{ username }}</router-link>
+          </li>
+      </ul>
+  </div>
+</template>
   
   <script>
   export default {
+    created() {
+      this.fetchUniqueUsernames();
+    },
     data() {
       return {
-        username: '',
-        password: ''
+        usernames: [],
       };
     },
     methods: {
-      async login() {
-        // Call your backend API here and get the session token
-        // Navigate to picker page if successful:
-        this.$router.push('/pick');
-      }
+      async fetchUniqueUsernames() {
+        try {
+            const response = await axios.get("https://fbpsql.ewnix.net/api/getuniqueusernames");
+            this.usernames = response.data;
+        } catch (error) {
+            console.error("Error fetching unique usernames:", error);
+        }
     }
   }
+}
   </script>
