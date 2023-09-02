@@ -77,12 +77,12 @@ export default {
   }
 
   // If today is Saturday, return today's date
-  if (today === 6) {
+  if (today === 5) {
     return currentDateIso;
   }
 
   // Otherwise, find the next Saturday
-  let daysUntilNextSaturday = 6 - today;
+  let daysUntilNextSaturday = 5 - today;
   date.setDate(date.getDate() + daysUntilNextSaturday);
   
   return date.toISOString().split('T')[0];
