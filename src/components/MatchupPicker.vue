@@ -67,32 +67,29 @@ export default {
   },
   methods: {
     findNextSaturday() {
-      let date = new Date();
-      const today = date.getDay();
-      const currentDateIso = date.toISOString().split('T')[0];
+  let date = new Date();
+  console.log("Initial Date:", date);  // Debug
 
-      // Since the season doesn't start until 9/2, let's start with that date.
-      if (currentDateIso < '2023-09-02') {
-        return '2023-09-02';
-      }
+  const currentDateIso = date.toISOString().split('T')[0];
+  console.log("Today's Date ISO:", currentDateIso);  // Debug
 
-      // If today is Saturday, return today's date
-      if (today === 6) {
-        return date.toISOString().split('T')[0];
-      }
+  // Since the season doesn't start until 9/2, let's start with that date.
+  if (currentDateIso < '2023-09-02') {
+    return '2023-09-02';
+  }
 
-      // If today is Sunday, return yesterday's date
-      if (today === 0) {
-        date.setDate(date.getDate() -1);
-        return date.toISOString().split('T')[0];
-      }
+  // Calculate the number of days to the next Saturday
+  let daysToNextSaturday = (6 - date.getDay() + 1) % 7;
+  if (daysToNextSaturday === 0) {
+    daysToNextSaturday = 7;
+  }
 
-      // Otherwise, find the next Saturday
-      while (date.getDay() !== 6) {
-        date.setDate(date.getDate() + 1);
-      }
-      return date.toISOString().split('T')[0];
-    },
+  date.setDate(date.getDate() + daysToNextSaturday);
+  console.log("Final Date:", date);  // Debug
+  
+  return date.toISOString().split('T')[0];
+},
+
     async fetchTeams() {
       try {
         const response = await axios.get("https://fbpsql.ewnix.net/api/populateteams");
